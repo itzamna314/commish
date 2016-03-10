@@ -1,0 +1,33 @@
+# compiled output
+/src/browser/dist
+/src/browser/tmp
+
+# dependencies
+/src/browser/node_modules
+/src/browser/bower_components
+
+# misc
+/src/browser/.sass-cache
+/src/browser/connect.lock
+/src/browser/coverage/*
+/src/browse/libpeerconnection.log
+npm-debug.log
+testem.log
+
+#go
+/src/golang/bin
+/src/golang/pkg
+/src/golang/vendor/src
+
+# docker
+.rootfs
+
+# Keys
+*.pem
+aws_keys.cmd
+
+# Deploy script
+Makefile
+
+# Vim
+*.swp
