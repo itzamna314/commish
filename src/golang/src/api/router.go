@@ -4,7 +4,10 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/itzamna314/gin-jwt"
+	"os"
 )
+
+var publicKey, privateKey string
 
 // Set everything up.
 // Everything related to the public API should be
@@ -12,9 +15,10 @@ import (
 // and should be defined in per-resource files
 // Other administrative api endpoints may be
 // described here
-func Init(masterConnection string) {
+func Init(masterConnection, certFile, keyFile string) {
 	adminConnStr = masterConnection
 	dbConnections.Init(adminConnStr)
+	initCert(certFile, keyFile)
 
 	r := gin.Default()
 	r.GET("/admin/health", health)
@@ -27,4 +31,7 @@ func Init(masterConnection string) {
 	api = r.Group("/api")
 	initPlayers(api)
 	r.Run()
+}
+
+func initCert(certFile, keyFile string) {
 }

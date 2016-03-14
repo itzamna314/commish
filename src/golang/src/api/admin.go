@@ -1,7 +1,12 @@
 package api
 
 import (
-	"golang.org/x/crypto.bcrypt"
+	"database/sql"
+	"fmt"
+	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
+	"time"
 )
 
 var adminConnStr string
@@ -66,6 +71,13 @@ func adminLogin(c *gin.Context) {
 	token.Claims["iat"] = time.Now().Unix()
 	token.Claims["exp"] = time.Now().Add(time.Hour).Unix()
 	tokenString, err := token.SignedString([]byte(superSecretKey))
+
+	c.JSON(200, gin.H{
+		"user": gin.H{
+			"identifier": body.Identifier,
+			"token":      tokenString,
+		},
+	})
 }
 
 func health(c *gin.Context) {
