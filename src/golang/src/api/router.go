@@ -3,24 +3,28 @@ package api
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/itzamna314/gin-jwt"
 )
 
+// Set everything up.
+// Everything related to the public API should be
+// set up under the "api" router group,
+// and should be defined in per-resource files
+// Other administrative api endpoints may be
+// described here
 func Init(masterConnection string) {
-	dbConnections.Init(masterConnection)
+	adminConnStr = masterConnection
+	dbConnections.Init(adminConnStr)
 
 	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": fmt.Sprintf("pong: %d", 10),
-		})
-	})
+	r.GET("/admin/health", health)
 
-	api := r.Group("/api")
-	api.Use(DbSelector())
-	api.GET("/players", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": fmt.Sprintf("using conn str %s", c.MustGet("connectionString").(string)),
-		})
-	})
+	// Use this endpoint to get a JWT that will
+	// allow you to perform admin operations
+	// against a particular connection
+	r.POST("/admin/logins", adminLogin)
+
+	api = r.Group("/api")
+	initPlayers(api)
 	r.Run()
 }

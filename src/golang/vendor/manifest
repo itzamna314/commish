@@ -2,6 +2,12 @@
 	"version": 0,
 	"dependencies": [
 		{
+			"importpath": "github.com/dgrijalva/jwt-go",
+			"repository": "https://github.com/dgrijalva/jwt-go",
+			"revision": "9a4b9f2ac1f7685147a5c01544e3b922dbc1f4a0",
+			"branch": "master"
+		},
+		{
 			"importpath": "github.com/dustin/go-broadcast",
 			"repository": "https://github.com/dustin/go-broadcast",
 			"revision": "3bdf6d4a7164a50bc19d5f230e2981d87d2584f1",
@@ -25,6 +31,12 @@
 			"revision": "0fd8c908d872c921af513ef5091964bbd2e0d904",
 			"branch": "master",
 			"path": "/proto"
+		},
+		{
+			"importpath": "github.com/itzamna314/gin-jwt",
+			"repository": "https://github.com/itzamna314/gin-jwt",
+			"revision": "e56a964cb683c39c50e52cd530aba606e1c0d81a",
+			"branch": "master"
 		},
 		{
 			"importpath": "github.com/manucorporat/sse",
