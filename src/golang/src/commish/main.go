@@ -1,17 +1,15 @@
 package main
 
 import (
+	"api"
+	"flag"
 	"fmt"
-	"net/http"
-	"runtime"
 )
 
-func indexHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "hello world, I'm running on %s with an %s CPU ",
-		runtime.GOOS, runtime.GOARCH)
-}
-
 func main() {
-	http.HandleFunc("/", indexHandler)
-	http.ListenAndServe(":8081", nil)
+	masterConn := flag.String("conn", "WebClient@tcp(localhost:3306)/auth", "MySql connection string")
+	flag.Parse()
+
+	api.Init(*masterConn)
+	fmt.Println("Started!")
 }

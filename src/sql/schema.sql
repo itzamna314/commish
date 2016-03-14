@@ -74,6 +74,7 @@ create trigger before_insert_principal
     
 create table if not exists principalLogin(
 	id int primary key not null auto_increment,
+    principalId int not null, foreign key(principalId) references principal(id),
     identifier nvarchar(128) not null,
 	contactTypeId int not null, foreign key(contactTypeId) references contactType(id),
     contactIdentifier nvarchar(128) not null,
