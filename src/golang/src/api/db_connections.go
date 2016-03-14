@@ -64,6 +64,7 @@ func DbSelector() gin.HandlerFunc {
 			return
 		}
 
+		c.Set("connectionName", hdr)
 		c.Set("connectionString", dbConnections.Map[hdr])
 	}
 }
