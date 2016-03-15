@@ -109,7 +109,7 @@ func health(c *gin.Context) {
 
 var findLoginsQuery string = `
 SELECT pl.passwordHash
-     , c.publicId as connection
+     , HEX(c.publicId) as connection
   from principalLogin pl
   join principal p on p.id = pl.principalId
   join dbConnection c on c.id = p.dbConnectionId
