@@ -1,11 +1,26 @@
 package api
 
-func initPlayers(r *RouterGroup) {
-	r.Use(DbSelector())
-	r.GET("/players", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": fmt.Sprintf("using conn str %s", c.MustGet("connectionString").(string)),
-		})
-	})
+import (
+	"fmt"
+	"github.com/gin-gonic/gin"
+)
 
+type playersRouter struct{}
+
+func initPlayers(r *gin.RouterGroup) {
+}
+
+func (p *playersRouter) List(c *gin.Context) {
+	conn := c.MustGet("connectionString").(string)
+	c.JSON(200, gin.H{
+		"message": fmt.Sprintf("using conn str %s", conn),
+	})
+}
+
+func (p *playersRouter) Create(c *gin.Context) {
+	conn := c.MustGet("connectionString").(string)
+	c.JSON(200, gin.H{
+		"message":    "create a player",
+		"connection": conn,
+	})
 }
