@@ -46,6 +46,9 @@ Subcollections:
 * GET /teams/{id}/leagues
 * GET /teams/{id}/tournaments
 
+#### Matches
+
+
 #### Leagues
 ---
 A league is a collection of teams, and a collection of games between those teams.  Games may be
@@ -65,3 +68,5 @@ Subcollections:
 * POST /leagues/{id}/tournaments - add a tournament to this league
 * GET /leagues/{id}/games
 * POST /leagues/{id}/games - add a game to this league
+
+#### Tournaments
