@@ -47,7 +47,22 @@ Subcollections:
 * GET /teams/{id}/tournaments
 
 #### Matches
+---
+A match represents a logical contest between two teams.  It should contain one or more games.
 
+* GET /matches/{id}
+* PATCH /matches/{id}
+* DELETE /matches/{id}
+* GET /matches/{id}/games
+* POST /matches/{id}/games
+
+#### Games
+---
+A game represents a contest between two teams.  One or more games may be required to resolve a match.
+
+* GET /games/{id}
+* PATCH /games/{id}
+* GET /games/{id}/teams
 
 #### Leagues
 ---
@@ -66,7 +81,17 @@ Subcollections:
 * POST /leagues/{id}/teams - add a team to this league
 * GET /leagues/{id}/tournaments - get all tournaments associated with this league
 * POST /leagues/{id}/tournaments - add a tournament to this league
-* GET /leagues/{id}/games
-* POST /leagues/{id}/games - add a game to this league
+* GET /leagues/{id}/matches
+* POST /leagues/{id}/matches - add a match to this league
 
 #### Tournaments
+---
+A tournament is a group of teams and games with a clear, single winner.  The winner is determined by the result of the final game.  A tournament may optionally belong to a league (ie end-of-season tournament).  A league could also consist entirely of tournaments, for instance to represent a tournament season.
+
+* PATCH /tournaments/{id}
+* DELETE /tournaments/{id}
+
+* GET /tournaments/{id}/matches
+* POST /tournaments/{id}/matches
+* GET /tournaments/{id}/teams
+* POST /tournaments/{id}/teams
