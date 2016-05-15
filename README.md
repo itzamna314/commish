@@ -40,6 +40,7 @@ Endpoints:
 * DELETE /teams/{id} - delete a team
 
 Subcollections:
+
 * GET /teams/{id}/players
 * POST /teams/{id}/players - add a player to this team
 * GET /teams/{id}/leagues
