@@ -245,16 +245,31 @@ create table if not exists leagueTournament(
     modifiedBy nvarchar(32) null
 );
 
-create table if not exists game(
-	id int primary key not null auto_increment,
+create table if not exists match(
+    id int primary key not null auto_increment,
     publicId binary(16) unique,
     homeTeamId int not null, foreign key(homeTeamId) references team(id),
     awayTeamId int not null, foreign key(awayTeamId) references team(id),
     stateId int not null, foreign key(stateId) references gameStateType(id),
-    homeTeamScore int not null default 0,
-    awayTeamScore int not null default 0,
     leagueId int null, foreign key(leagueId) references league(id),
     tournamentId int null, foreign key(tournamentId) references tournament(id),
+	createdOn datetime not null,
+    createdBy nvarchar(32) not null,
+    modifiedOn datetime not null,
+    modifiedBy nvarchar(32) null
+)
+    
+create trigger before_insert_match
+	before insert on match
+    for each row
+    set new.publicId = UNHEX(REPLACE(UUID(), '-', ''));    
+    
+create table if not exists game(
+	id int primary key not null auto_increment,
+    publicId binary(16) unique,
+    stateId int not null, foreign key(stateId) references gameStateType(id),
+    homeTeamScore int not null default 0,
+    awayTeamScore int not null default 0,
 	createdOn datetime not null,
     createdBy nvarchar(32) not null,
     modifiedOn datetime not null,
