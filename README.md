@@ -13,49 +13,49 @@ All non-admin operations require the client to pass in a connection id.  This sh
 ---
 The player resource defines a player.  
 Endpoints:
-GET /players - list of all players
-POST /players - Create a new player
-GET /players/{id} - Fetch a detailed view of a specific player
-PUT /players/{id} - Replace a player
-PATCH /players/{id} - Update one or more specific fields of a player
-DELETE /players/{id} - Remove a player
+* GET /players - list of all players
+* POST /players - Create a new player
+* GET /players/{id} - Fetch a detailed view of a specific player
+* PUT /players/{id} - Replace a player
+* PATCH /players/{id} - Update one or more specific fields of a player
+* DELETE /players/{id} - Remove a player
 
 Subcollections:
-GET /players/{id}/teams
-GET /players/{id}/leagues
-GET /players/{id}/tournaments
+* GET /players/{id}/teams
+* GET /players/{id}/leagues
+* GET /players/{id}/tournaments
 
 #### Teams
 ---
 A team is a collection of players.  It may be entered into leagues and tournaments
 Endpoints:
-GET /teams - list of all teams
-POST /teams - create a new team
-GET /teams/{id} - detailed view of a team
-PUT /teams/{id} - replace a team
-PATCH /players/{id} - Update one or more specified fields
-DELETE /teams/{id} - delete a team
+* GET /teams - list of all teams
+* POST /teams - create a new team
+* GET /teams/{id} - detailed view of a team
+* PUT /teams/{id} - replace a team
+* PATCH /players/{id} - Update one or more specified fields
+* DELETE /teams/{id} - delete a team
 
 Subcollections:
-GET /teams/{id}/players
-POST /teams/{id}/players - add a player to this team
-GET /teams/{id}/leagues
-GET /teams/{id}/tournaments
+* GET /teams/{id}/players
+* POST /teams/{id}/players - add a player to this team
+* GET /teams/{id}/leagues
+* GET /teams/{id}/tournaments
 
 #### Leagues
 ---
 A league is a collection of teams, and a collection of games between those teams.  Games may be
 scheduled for the future, or may have already been played and have result data.
-GET /leagues - list of all leagues
-POST /leagues - create a new league
-GET /leagues/{id} - detailed view of a league
-PUT /leagues/{id}
-DELETE /leagues/{id}
+* GET /leagues - list of all leagues
+* POST /leagues - create a new league
+* GET /leagues/{id} - detailed view of a league
+* PUT /leagues/{id}
+* DELETE /leagues/{id}
 
 Subcollections:
-GET /leagues/{id}/teams
-POST /leagues/{id}/teams - add a team to this league
-GET /leagues/{id}/tournaments - get all tournaments associated with this league
-POST /leagues/{id}/tournaments - add a tournament to this league
-GET /leagues/{id}/games
-POST /leagues/{id}/games - add a game to this league
+* GET /leagues/{id}/teams
+* POST /leagues/{id}/teams - add a team to this league
+* GET /leagues/{id}/tournaments - get all tournaments associated with this league
+* POST /leagues/{id}/tournaments - add a tournament to this league
+* GET /leagues/{id}/games
+* POST /leagues/{id}/games - add a game to this league
