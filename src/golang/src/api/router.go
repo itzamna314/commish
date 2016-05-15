@@ -1,12 +1,14 @@
 package api
 
 import (
+	"admin"
 	"crypto/rsa"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/itzamna314/gin-jwt"
 	"io/ioutil"
+	"players"
 )
 
 // Set everything up.
@@ -16,12 +18,17 @@ import (
 // Other administrative api endpoints may be
 // described here
 func Init(masterConnection, certFile, keyFile string) {
+	r := gin.Default()
+	adminApi := r.Group("/admin")
+
 	publicKey, privateKey := initCert(certFile, keyFile)
-	admin := adminRouter{
+	adminRouter := admin.Router{
 		ConnectionString: masterConnection,
 		PrivateKey:       privateKey,
 		PublicKey:        publicKey,
 	}
+	adminRouter.SetupRoutes(adminApi)
+
 	dbSelector := dbSelector{
 		ConnectionString: masterConnection,
 	}
@@ -32,11 +39,6 @@ func Init(masterConnection, certFile, keyFile string) {
 		Method: jwt.SigningMethodRS256,
 	}
 
-	r := gin.Default()
-	r.GET("/admin/health", health)
-
-	r.POST("/admin/logins", admin.LoginEndpoint)
-
 	publicApi := r.Group("/api")
 	publicApi.Use(dbSelector.Public())
 
@@ -44,9 +46,7 @@ func Init(masterConnection, certFile, keyFile string) {
 	protectedApi.Use(validator.Middleware())
 	protectedApi.Use(dbSelector.Protected())
 
-	players := playersRouter{}
-	publicApi.GET("/players", players.List)
-	protectedApi.POST("/players", players.Create)
+	players.SetupRoutes(publicApi, protectedApi)
 
 	r.Run()
 }
