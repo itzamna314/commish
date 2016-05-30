@@ -1,6 +1,7 @@
 package players
 
 import (
+	"fmt"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -20,6 +21,7 @@ var (
 	fetchStmt        *sqlx.NamedStmt
 	fetchPrivateStmt *sqlx.NamedStmt
 	createStmt       *sqlx.NamedStmt
+	replaceStmt      *sqlx.NamedStmt
 )
 
 func createRepo(db *sqlx.DB) *repo {
@@ -30,6 +32,7 @@ func createRepo(db *sqlx.DB) *repo {
 	fetchPrivateStmt, err = db.PrepareNamed(fetchPrivateQuery)
 	createStmt, err = db.PrepareNamed(createQuery)
 	fetchStmt, err = db.PrepareNamed(fetchQuery)
+	replaceStmt, err = db.PrepareNamed(replaceQuery)
 	if err != nil {
 		panic(err)
 	}
@@ -65,17 +68,33 @@ func (r *repo) fetchPlayerPrivate(id int) (*Player, error) {
 	return &player, nil
 }
 
-func (r *repo) CreatePlayer(p *Player) (int, error) {
+func (r *repo) CreatePlayer(p *Player) (*Player, error) {
 	res, err := createStmt.Exec(p)
 	if err != nil {
-		return 0, err
+		return nil, err
 	}
 
 	if id, err := res.LastInsertId(); err != nil {
-		return 0, err
+		return nil, err
 	} else {
-		return int(id), nil
+		return r.fetchPlayerPrivate(int(id))
 	}
+}
+
+func (r *repo) ReplacePlayer(id string, p *Player) (*Player, error) {
+	p.PublicId = id
+	res, err := replaceStmt.Exec(p)
+	if err != nil {
+		return nil, err
+	}
+
+	if n, err := res.RowsAffected(); err != nil {
+		return nil, err
+	} else if n != 1 {
+		return nil, fmt.Errorf("Failed to update player.  Bad gender value?")
+	}
+
+	return r.FetchPlayer(id)
 }
 
 func idStruct(id int) interface{} {

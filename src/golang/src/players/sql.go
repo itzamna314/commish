@@ -40,4 +40,13 @@ INSERT INTO player(Name, Age, GenderId, CreatedOn, CreatedBy)
 	  FROM genderType g
 	 WHERE g.name = :gender;
 `
+
+	replaceQuery = `
+UPDATE player p
+  JOIN genderType g on g.name = :gender 
+   SET p.name = :name
+     , p.age = :age
+	 , p.genderId = g.id
+ WHERE HEX(p.publicId) = :publicId;
+`
 )

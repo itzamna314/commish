@@ -10,6 +10,7 @@ func SetupRoutes(public *gin.RouterGroup, private *gin.RouterGroup) {
 	public.GET("/players", list)
 	public.GET("/players/:id", fetch)
 	private.POST("/players", create)
+	private.PUT("/players/:id", replace)
 }
 
 func list(c *gin.Context) {
@@ -55,7 +56,7 @@ func create(c *gin.Context) {
 		return
 	}
 
-	privateId, err := repo.CreatePlayer(&req)
+	player, err := repo.CreatePlayer(&req)
 	if err != nil {
 		fmt.Printf("Failed to create player: %s\n", err)
 		c.JSON(500, gin.H{
@@ -64,11 +65,36 @@ func create(c *gin.Context) {
 		return
 	}
 
-	player, err := repo.fetchPlayerPrivate(privateId)
+	c.JSON(200, gin.H{
+		"players": []Player{*player},
+	})
+}
+
+func replace(c *gin.Context) {
+	db := c.MustGet("connectionDb").(*sqlx.DB)
+	repo := createRepo(db)
+
+	publicId := c.Param("id")
+	if publicId == "" {
+		c.JSON(400, gin.H{
+			"message": "Public id is required",
+		})
+	}
+
+	req := Player{}
+	if err := c.BindJSON(&req); err != nil {
+		c.JSON(400, gin.H{
+			"message": "Failed to bind to player",
+			"error":   err,
+		})
+		return
+	}
+
+	player, err := repo.ReplacePlayer(publicId, &req)
 	if err != nil {
-		fmt.Printf("Failed to fetch created player: %s\n", err)
+		fmt.Printf("Failed to replace player: %s\n", err)
 		c.JSON(500, gin.H{
-			"message": "Failed to fetch newly-created player",
+			"message": "Server failed to replace player",
 		})
 		return
 	}
