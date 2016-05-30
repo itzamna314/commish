@@ -1,8 +1,8 @@
 package admin
 
 import (
-	"database/sql"
 	"fmt"
+	"github.com/jmoiron/sqlx"
 )
 
 type account struct {
@@ -12,7 +12,7 @@ type account struct {
 }
 
 func (r *Router) findUserByIdentifier(identifier string) (*account, error) {
-	db, err := sql.Open("mysql", r.ConnectionString)
+	db, err := sqlx.Open("mysql", r.ConnectionString)
 	if err != nil {
 		fmt.Printf("Failed to connect to admin db: %s", err)
 		return nil, err

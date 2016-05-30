@@ -144,7 +144,7 @@ create table if not exists player(
     height int null,
     createdOn datetime not null,
     createdBy nvarchar(32) not null,
-    modifiedOn datetime not null,
+    modifiedOn datetime null,
     modifiedBy nvarchar(32) null
 );
 
@@ -159,7 +159,7 @@ create table if not exists team(
     name nvarchar(64) not null,
 	createdOn datetime not null,
     createdBy nvarchar(32) not null,
-    modifiedOn datetime not null,
+    modifiedOn datetime null,
     modifiedBy nvarchar(32) null
 );
 
@@ -174,7 +174,7 @@ create table if not exists playerTeam(
     teamId int not null, foreign key(teamId) references team(id),
 	createdOn datetime not null,
     createdBy nvarchar(32) not null,
-    modifiedOn datetime not null,
+    modifiedOn datetime null,
     modifiedBy nvarchar(32) null
 );
 
@@ -184,7 +184,7 @@ create table if not exists division(
     name nvarchar(64) not null,
 	createdOn datetime not null,
     createdBy nvarchar(32) not null,
-    modifiedOn datetime not null,
+    modifiedOn datetime null,
     modifiedBy nvarchar(32) null
 );
 
@@ -205,7 +205,7 @@ create table if not exists tournament(
     endDate datetime not null,
 	createdOn datetime not null,
     createdBy nvarchar(32) not null,
-    modifiedOn datetime not null,
+    modifiedOn datetime null,
     modifiedBy nvarchar(32) null
 );
 
@@ -226,7 +226,7 @@ create table if not exists league(
     endDate datetime not null,
 	createdOn datetime not null,
     createdBy nvarchar(32) not null,
-    modifiedOn datetime not null,
+    modifiedOn datetime null,
     modifiedBy nvarchar(32) null
 );
 
@@ -241,7 +241,7 @@ create table if not exists leagueTournament(
     tournamentId int not null, foreign key(tournamentId) references tournament(id),
 	createdOn datetime not null,
     createdBy nvarchar(32) not null,
-    modifiedOn datetime not null,
+    modifiedOn datetime null,
     modifiedBy nvarchar(32) null
 );
 
@@ -257,7 +257,7 @@ create table if not exists `match`(
     tournamentId int null, foreign key(tournamentId) references tournament(id),
 	createdOn datetime not null,
     createdBy nvarchar(32) not null,
-    modifiedOn datetime not null,
+    modifiedOn datetime null,
     modifiedBy nvarchar(32) null
 );
     
@@ -275,7 +275,7 @@ create table if not exists game(
     awayTeamScore int not null default 0,
 	createdOn datetime not null,
     createdBy nvarchar(32) not null,
-    modifiedOn datetime not null,
+    modifiedOn datetime null,
     modifiedBy nvarchar(32) null
 );
 
@@ -291,7 +291,7 @@ create table if not exists statisticCalculator(
     description nvarchar(128) null,
     createdOn datetime not null,
     createdBy nvarchar(32) not null,
-    modifiedOn datetime not null,
+    modifiedOn datetime null,
     modifiedBy nvarchar(32) null
 );
 

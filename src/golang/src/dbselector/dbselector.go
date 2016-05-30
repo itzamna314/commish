@@ -1,11 +1,10 @@
-package api
+package dbselector
 
 import (
-	"database/sql"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
-	"os"
+	"github.com/jmoiron/sqlx"
 )
 
 const (
@@ -13,46 +12,52 @@ const (
 )
 
 type dbSelector struct {
-	Map              map[string]string
-	ConnectionString string
+	Map map[string]*sqlx.DB
 }
 
-func (d *dbSelector) Init() {
-	db, err := sql.Open("mysql", d.ConnectionString)
+func Create(masterConnStr string) (*dbSelector, error) {
+	db, err := sqlx.Open("mysql", masterConnStr)
 	if err != nil {
-		fmt.Printf("Failed to connect to connections db: %s", err)
-		os.Exit(2)
+		return nil, fmt.Errorf("Failed to connect to connections db: %s", err)
 	}
 
-	d.Map = make(map[string]string)
+	d := dbSelector{
+		Map: make(map[string]*sqlx.DB),
+	}
 
 	rows, err := db.Query(listConnectionsQuery)
 	if err != nil {
-		fmt.Printf("Failed to list available connections: %s", err)
-		os.Exit(2)
+		return nil, fmt.Errorf("Failed to list available connections: %s", err)
 	}
 	defer rows.Close()
 
 	var publicId, connectionString string
 	for rows.Next() {
-		err := rows.Scan(&publicId, &connectionString)
-		if err != nil {
-			fmt.Printf("Failed to scan row with available connection: %s")
+		if err = rows.Scan(&publicId, &connectionString); err != nil {
+			fmt.Printf("Warning: Failed to scan row with available connection: %s")
 			continue
 		}
-		d.Map[publicId] = connectionString
+		conn, err := sqlx.Open("mysql", connectionString)
+		if err != nil {
+			fmt.Printf("Warning: Failed to open connection %s: %s", publicId, err)
+			continue
+		}
+
+		d.Map[publicId] = conn
 	}
+
+	return &d, nil
 }
 
 func (d *dbSelector) Public() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		name, connStr, err := d.loadConnection(c)
+		name, db, err := d.loadConnection(c)
 		if err != nil {
 			return
 		}
 
 		c.Set("connectionName", name)
-		c.Set("connectionString", connStr)
+		c.Set("connectionDb", db)
 	}
 }
 
@@ -66,7 +71,7 @@ func (d *dbSelector) Protected() gin.HandlerFunc {
 			return
 		}
 
-		name, connStr, err := d.loadConnection(c)
+		name, db, err := d.loadConnection(c)
 		if err != nil {
 			return
 		}
@@ -77,11 +82,11 @@ func (d *dbSelector) Protected() gin.HandlerFunc {
 		}
 
 		c.Set("connectionName", name)
-		c.Set("connectionString", connStr)
+		c.Set("connectionDb", db)
 	}
 }
 
-func (d *dbSelector) loadConnection(c *gin.Context) (name, connStr string, err error) {
+func (d *dbSelector) loadConnection(c *gin.Context) (name string, db *sqlx.DB, err error) {
 	hdr := c.Request.Header.Get(connectionHeader)
 	if hdr == "" {
 		c.JSON(400, gin.H{
@@ -92,7 +97,7 @@ func (d *dbSelector) loadConnection(c *gin.Context) (name, connStr string, err e
 		return
 	}
 
-	if d.Map[hdr] == "" {
+	if d.Map[hdr] == nil {
 		c.JSON(400, gin.H{
 			"message": fmt.Sprintf("Unknown connection %s", hdr),
 		})
@@ -102,7 +107,7 @@ func (d *dbSelector) loadConnection(c *gin.Context) (name, connStr string, err e
 	}
 
 	name = hdr
-	connStr = d.Map[hdr]
+	db = d.Map[hdr]
 	err = nil
 	return
 }

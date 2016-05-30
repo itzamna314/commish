@@ -1,10 +1,33 @@
 package players
 
 const (
-	listPlayersQuery = `
-SELECT publicId
-     , name
-	 , age
-	 , gender
-  FROM players`
+	listQuery = `
+SELECT HEX(p.publicId) as publicId
+     , p.name
+	 , p.age
+	 , g.name as gender
+  FROM player p
+  JOIN genderType g on g.id = p.genderId
+`
+
+	fetchPrivateQuery = `
+SELECT HEX(p.publicId) as publicId
+	 , p.name
+     , p.age
+     , g.name as gender
+  FROM player p
+  JOIN genderType g on g.id = p.genderId
+ WHERE p.id=:id
+`
+
+	createQuery = `
+INSERT INTO player(Name, Age, GenderId, CreatedOn, CreatedBy)
+	SELECT :name 
+		 , :age
+	     , g.id
+		 , CURRENT_TIMESTAMP
+		 , 'players/createQuery'
+	  FROM genderType g
+	 WHERE g.name = :gender;
+`
 )

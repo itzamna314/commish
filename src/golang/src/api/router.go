@@ -3,11 +3,13 @@ package api
 import (
 	"admin"
 	"crypto/rsa"
+	"dbselector"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/itzamna314/gin-jwt"
 	"io/ioutil"
+	"os"
 	"players"
 )
 
@@ -29,10 +31,11 @@ func Init(masterConnection, certFile, keyFile string) {
 	}
 	adminRouter.SetupRoutes(adminApi)
 
-	dbSelector := dbSelector{
-		ConnectionString: masterConnection,
+	dbSelector, err := dbselector.Create(masterConnection)
+	if err != nil {
+		fmt.Printf("Failed to initialize connection map: %s\n", err)
+		os.Exit(2)
 	}
-	dbSelector.Init()
 
 	validator := jwtauth.Validator{
 		Key:    publicKey,
