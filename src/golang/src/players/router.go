@@ -8,6 +8,7 @@ import (
 
 func SetupRoutes(public *gin.RouterGroup, private *gin.RouterGroup) {
 	public.GET("/players", list)
+	public.GET("/players/:id", fetch)
 	private.POST("/players", create)
 }
 
@@ -21,6 +22,22 @@ func list(c *gin.Context) {
 	} else {
 		c.JSON(200, gin.H{
 			"players": players,
+		})
+	}
+}
+
+func fetch(c *gin.Context) {
+	db := c.MustGet("connectionDb").(*sqlx.DB)
+	id := c.Param("id")
+	repo := createRepo(db)
+	if player, err := repo.FetchPlayer(id); err != nil {
+		fmt.Printf("Failed to fetch player: %s\n", err)
+		c.JSON(500, gin.H{
+			"message": "Failed to fetch player",
+		})
+	} else {
+		c.JSON(200, gin.H{
+			"players": []Player{*player},
 		})
 	}
 }

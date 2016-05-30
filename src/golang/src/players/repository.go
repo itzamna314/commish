@@ -17,6 +17,7 @@ type repo struct {
 
 var (
 	listStmt         *sqlx.NamedStmt
+	fetchStmt        *sqlx.NamedStmt
 	fetchPrivateStmt *sqlx.NamedStmt
 	createStmt       *sqlx.NamedStmt
 )
@@ -28,6 +29,7 @@ func createRepo(db *sqlx.DB) *repo {
 	listStmt, err = db.PrepareNamed(listQuery)
 	fetchPrivateStmt, err = db.PrepareNamed(fetchPrivateQuery)
 	createStmt, err = db.PrepareNamed(createQuery)
+	fetchStmt, err = db.PrepareNamed(fetchQuery)
 	if err != nil {
 		panic(err)
 	}
@@ -47,7 +49,8 @@ func (r *repo) ListPlayers() ([]Player, error) {
 
 func (r *repo) FetchPlayer(id string) (*Player, error) {
 	player := Player{}
-	if err := listStmt.Select(&player, id); err != nil {
+	arg := struct{ Id string }{Id: id}
+	if err := fetchStmt.Get(&player, arg); err != nil {
 		return nil, err
 	}
 	return &player, nil

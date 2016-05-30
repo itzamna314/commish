@@ -10,6 +10,16 @@ SELECT HEX(p.publicId) as publicId
   JOIN genderType g on g.id = p.genderId
 `
 
+	fetchQuery = `
+SELECT HEX(p.publicId) as publicId
+     , p.name
+	 , p.age
+	 , g.name as gender
+  FROM player p
+  JOIN genderType g on g.id = p.genderId
+ WHERE HEX(p.publicId)=:id
+`
+
 	fetchPrivateQuery = `
 SELECT HEX(p.publicId) as publicId
 	 , p.name
