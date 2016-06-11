@@ -248,8 +248,9 @@ create table if not exists leagueTournament(
 create table if not exists `match`(
     id int primary key not null auto_increment,
     publicId binary(16) unique,
-    homeTeamId int not null, foreign key(homeTeamId) references team(id),
-    awayTeamId int not null, foreign key(awayTeamId) references team(id),
+    homeTeamId int null, foreign key(homeTeamId) references team(id),
+    awayTeamId int null, foreign key(awayTeamId) references team(id),
+    -- These recursive relations are used for building tournament structures
     homeTeamMatchId int null, foreign key(homeTeamMatchId) references `match`(id),
     awayTeamMatchId int null, foreign key(awayTeamMatchId) references `match`(id),
     stateId int not null, foreign key(stateId) references gameStateType(id),

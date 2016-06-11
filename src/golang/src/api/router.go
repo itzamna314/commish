@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/itzamna314/gin-jwt"
 	"io/ioutil"
+	"matches"
 	"os"
 	"players"
 	"teams"
@@ -52,6 +53,7 @@ func Init(masterConnection, certFile, keyFile string) {
 
 	players.SetupRoutes(publicApi, protectedApi)
 	teams.SetupRoutes(publicApi, protectedApi)
+	matches.SetupRoutes(publicApi, protectedApi)
 
 	r.Run()
 }

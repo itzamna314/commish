@@ -54,14 +54,14 @@ func (r *repo) FetchPlayer(id string) (*Player, error) {
 	return &player, nil
 }
 
-func (r *repo) fetchPlayerPrivate(id int) (*Player, error) {
+func (r *repo) fetchPlayerPrivate(id int64) (*Player, error) {
 	fetchPrivateStmt, err := cache.Load(r.db, "fetchPrivate", fetchPrivateQuery)
 	if err != nil {
 		return nil, err
 	}
 
 	player := Player{}
-	arg := struct{ Id int }{Id: id}
+	arg := struct{ Id int64 }{Id: id}
 	if err := fetchPrivateStmt.Get(&player, &arg); err != nil {
 		return nil, err
 	}
@@ -82,7 +82,7 @@ func (r *repo) CreatePlayer(p *Player) (*Player, error) {
 	if id, err := res.LastInsertId(); err != nil {
 		return nil, err
 	} else {
-		return r.fetchPlayerPrivate(int(id))
+		return r.fetchPlayerPrivate(id)
 	}
 }
 
@@ -105,12 +105,4 @@ func (r *repo) ReplacePlayer(id string, p *Player) (*Player, error) {
 	}
 
 	return r.FetchPlayer(id)
-}
-
-func idStruct(id int) interface{} {
-	return struct {
-		Id int `db:"id"`
-	}{
-		Id: id,
-	}
 }

@@ -79,6 +79,7 @@ func replace(c *gin.Context) {
 		c.JSON(400, gin.H{
 			"message": "Public id is required",
 		})
+		return
 	}
 
 	req := Player{}
