@@ -47,6 +47,8 @@ UPDATE player p
    SET p.name = :name
      , p.age = :age
 	 , p.genderId = g.id
+	 , p.modifiedOn = CURRENT_TIMESTAMP
+	 , p.modifiedBy = 'players/replaceQuery'
  WHERE HEX(p.publicId) = :publicId;
 `
 )

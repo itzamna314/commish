@@ -1,4 +1,4 @@
-package players
+package teams
 
 import (
 	"common"
@@ -6,11 +6,9 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-type Player struct {
+type Team struct {
 	PublicId string `json:"publicId" db:"publicId"`
 	Name     string `json:"name" db:"name"`
-	Age      int    `json:"age" db:"age"`
-	Gender   string `json:"gender" db:"gender"`
 }
 
 type repo struct {
@@ -27,48 +25,48 @@ func createRepo(db *sqlx.DB) *repo {
 	}
 }
 
-func (r *repo) ListPlayers() ([]Player, error) {
+func (r *repo) ListTeams() ([]Team, error) {
 	listStmt, err := cache.Load(r.db, "list", listQuery)
 	if err != nil {
 		return nil, err
 	}
 
-	players := []Player{}
-	if err := listStmt.Select(&players, Player{}); err != nil {
+	teams := []Team{}
+	if err := listStmt.Select(&teams, Team{}); err != nil {
 		return nil, err
 	}
-	return players, nil
+	return teams, nil
 }
 
-func (r *repo) FetchPlayer(id string) (*Player, error) {
+func (r *repo) FetchTeam(id string) (*Team, error) {
 	fetchStmt, err := cache.Load(r.db, "fetch", fetchQuery)
 	if err != nil {
 		return nil, err
 	}
 
-	player := Player{}
+	team := Team{}
 	arg := struct{ Id string }{Id: id}
-	if err := fetchStmt.Get(&player, arg); err != nil {
+	if err := fetchStmt.Get(&team, arg); err != nil {
 		return nil, err
 	}
-	return &player, nil
+	return &team, nil
 }
 
-func (r *repo) fetchPlayerPrivate(id int) (*Player, error) {
+func (r *repo) fetchTeamPrivate(id int) (*Team, error) {
 	fetchPrivateStmt, err := cache.Load(r.db, "fetchPrivate", fetchPrivateQuery)
 	if err != nil {
 		return nil, err
 	}
 
-	player := Player{}
+	team := Team{}
 	arg := struct{ Id int }{Id: id}
-	if err := fetchPrivateStmt.Get(&player, &arg); err != nil {
+	if err := fetchPrivateStmt.Get(&team, &arg); err != nil {
 		return nil, err
 	}
-	return &player, nil
+	return &team, nil
 }
 
-func (r *repo) CreatePlayer(p *Player) (*Player, error) {
+func (r *repo) CreateTeam(p *Team) (*Team, error) {
 	createStmt, err := cache.Load(r.db, "create", createQuery)
 	if err != nil {
 		return nil, err
@@ -82,11 +80,11 @@ func (r *repo) CreatePlayer(p *Player) (*Player, error) {
 	if id, err := res.LastInsertId(); err != nil {
 		return nil, err
 	} else {
-		return r.fetchPlayerPrivate(int(id))
+		return r.fetchTeamPrivate(int(id))
 	}
 }
 
-func (r *repo) ReplacePlayer(id string, p *Player) (*Player, error) {
+func (r *repo) ReplaceTeam(id string, p *Team) (*Team, error) {
 	replaceStmt, err := cache.Load(r.db, "replace", replaceQuery)
 	if err != nil {
 		return nil, err
@@ -101,10 +99,10 @@ func (r *repo) ReplacePlayer(id string, p *Player) (*Player, error) {
 	if n, err := res.RowsAffected(); err != nil {
 		return nil, err
 	} else if n != 1 {
-		return nil, fmt.Errorf("Failed to update player.  Bad gender value?")
+		return nil, fmt.Errorf("Failed to update team.  Bad gender value?")
 	}
 
-	return r.FetchPlayer(id)
+	return r.FetchTeam(id)
 }
 
 func idStruct(id int) interface{} {

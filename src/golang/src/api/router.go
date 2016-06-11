@@ -11,6 +11,7 @@ import (
 	"io/ioutil"
 	"os"
 	"players"
+	"teams"
 )
 
 // Set everything up.
@@ -50,6 +51,7 @@ func Init(masterConnection, certFile, keyFile string) {
 	protectedApi.Use(dbSelector.Protected())
 
 	players.SetupRoutes(publicApi, protectedApi)
+	teams.SetupRoutes(publicApi, protectedApi)
 
 	r.Run()
 }
