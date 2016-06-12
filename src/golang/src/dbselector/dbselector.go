@@ -65,6 +65,7 @@ func (d *dbSelector) Public() gin.HandlerFunc {
 func (d *dbSelector) Protected() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		claims := c.MustGet("claims").(map[string]interface{})
+
 		connectionName, ok := claims["commish/connection"].(string)
 		if !ok {
 			c.AbortWithError(401, fmt.Errorf("Insufficient privilege"))
