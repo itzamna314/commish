@@ -5,10 +5,12 @@ import (
 	"crypto/rsa"
 	"dbselector"
 	"fmt"
+	"games"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/itzamna314/gin-jwt"
 	"io/ioutil"
+	"leagues"
 	"matches"
 	"os"
 	"players"
@@ -51,9 +53,11 @@ func Init(masterConnection, certFile, keyFile string) {
 	protectedApi.Use(validator.Middleware())
 	protectedApi.Use(dbSelector.Protected())
 
+	games.SetupRoutes(publicApi, protectedApi)
+	leagues.SetupRoutes(publicApi, protectedApi)
+	matches.SetupRoutes(publicApi, protectedApi)
 	players.SetupRoutes(publicApi, protectedApi)
 	teams.SetupRoutes(publicApi, protectedApi)
-	matches.SetupRoutes(publicApi, protectedApi)
 
 	r.Run()
 }

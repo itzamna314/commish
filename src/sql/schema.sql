@@ -14,7 +14,7 @@ insert into genderType(name) values
 	('female')
   , ('male')
   , ('co-ed')
-  , ('other')
+  , ('alternate')
   , ('unspecified');
   
 create table if not exists contactType(
