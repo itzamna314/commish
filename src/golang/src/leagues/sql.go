@@ -65,7 +65,7 @@ INSERT INTO league(name, location, description, divisionId, genderId, startDate,
 	replaceQuery = `
 UPDATE league l
   JOIN genderType g on g.name = :gender
-  JOIN divisionType d on d.name = :division
+  JOIN division d on d.name = :division
    SET l.name = :name
      , l.description = :description
 	 , l.location = :location

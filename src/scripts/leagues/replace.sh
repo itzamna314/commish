@@ -3,4 +3,4 @@ if [ $# -ne 1 ]; then
     exit 1
 fi
 
-curl -X PUT $HOST/api/players/$1 -H "Content-Type: application/json" -H "$COMMISH_AUTH" -H "$COMMISH_CONN" -d '{"name":"Geraldine", "age":37, "gender":"female"}'
+curl -X PUT $HOST/api/leagues/$1 -H "Content-Type: application/json" -H "$COMMISH_AUTH" -H "$COMMISH_CONN" -d @-

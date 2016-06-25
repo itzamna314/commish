@@ -97,14 +97,20 @@ func (r *repo) CreateLeague(l *League) (*League, error) {
 	}
 }
 
-func (r *repo) ReplaceLeague(id string, p *League) (*League, error) {
+func (r *repo) ReplaceLeague(id string, l *League) (*League, error) {
+	divisionRepo := divisions.CreateRepo(r.db)
+	_, err := divisionRepo.CreateIfNotExists(l.Division)
+	if err != nil {
+		return nil, err
+	}
+
 	replaceStmt, err := cache.Load(r.db, "replace", replaceQuery)
 	if err != nil {
 		return nil, err
 	}
 
-	p.PublicId = id
-	res, err := replaceStmt.Exec(p)
+	l.PublicId = id
+	res, err := replaceStmt.Exec(l)
 	if err != nil {
 		return nil, err
 	}
