@@ -1,0 +1,30 @@
+<div>
+  <span>
+      {{text-filter onUpdate=(action 'onUpdate')}}
+  </span>
+</div>
+
+<div>
+  {{list-players players=model.players selected=(action 'selected')}}
+</div>
+
+<div>
+</div>
+
+<button {{action 'create'}}>Create New</button>
+
+<div>
+    {{input value=selectedPlayer.name}}
+</div>
+
+<div>
+    {{input value=selectedPlayer.age}}
+</div>
+
+<div>
+    {{input value=selectedPlayer.gender}}
+</div>
+
+<button {{action 'submit'}}>Save</button>
+
+{{outlet}}

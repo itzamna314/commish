@@ -1,0 +1,13 @@
+<h5>List players</h5>
+
+<div class="players-list">
+    {{#each players as |player|}}
+    <div class="row" {{action "selected" player}}>
+        <div class="column">{{player.name}}</div>
+        <div class="column">{{player.age}}</div>
+        <div class="column">{{player.gender}}</div>
+    </div>
+    {{/each}}
+</div>
+
+{{yield}}

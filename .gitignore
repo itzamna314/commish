@@ -1,16 +1,16 @@
 # compiled output
-/src/browser/dist
-/src/browser/tmp
+/src/browser/commish/dist
+/src/browser/commish/tmp
 
 # dependencies
-/src/browser/node_modules
-/src/browser/bower_components
+/src/browser/commish/node_modules
+/src/browser/commish/bower_components
 
 # misc
-/src/browser/.sass-cache
-/src/browser/connect.lock
-/src/browser/coverage/*
-/src/browse/libpeerconnection.log
+/src/browser/commish/.sass-cache
+/src/browser/commish/connect.lock
+/src/browser/commish/coverage/*
+/src/browse/commish/libpeerconnection.log
 npm-debug.log
 testem.log
 
