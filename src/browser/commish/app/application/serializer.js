@@ -1,5 +1,5 @@
 import JSONAPISerializer from 'ember-data/serializers/json-api';
-import _ from 'lodash/lodash'
+import _ from 'lodash/lodash';
 
 export default JSONAPISerializer.extend({
   normalizeResponse (store, type, payload) {
@@ -11,7 +11,7 @@ export default JSONAPISerializer.extend({
           attributes: res
         };
       }));
-    }, [])
+    }, []);
  
     return {
       data: data     

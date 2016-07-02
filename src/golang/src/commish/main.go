@@ -4,6 +4,7 @@ import (
 	"api"
 	"flag"
 	"fmt"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -12,6 +13,12 @@ func main() {
 	keyFile := flag.String("key", "devkeys/private.pem", "private key file")
 	flag.Parse()
 
-	api.Init(*masterConn, *certFile, *keyFile)
+	r := api.Init(*masterConn, *certFile, *keyFile)
+	r.StaticFile("/", "./www/index.html")
+	r.Static("/assets", "./www/assets")
+	r.NoRoute(func(c *gin.Context) {
+		c.Redirect(301, "/")
+	})
+	r.Run()
 	fmt.Println("Started!")
 }

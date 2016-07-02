@@ -1,7 +1,11 @@
 import JSONAPIAdapter from 'ember-data/adapters/json-api';
+import ENV from 'commish/config/environment';
 
-export default JSONAPIAdapter.extend({
+var extension = {
   namespace: 'api',
+  headers: {
+    "X-COMMISH-CONNECTION": ENV.connectionId
+  },
   query (store, type, query) {
     var url = this.buildURL(type.modelName, null, null, 'query', query);
 
@@ -11,4 +15,10 @@ export default JSONAPIAdapter.extend({
 
     return this.ajax(url + '/query', 'POST', { data: query });
   }
-});
+};
+
+if (ENV.apiBase) {
+  extension.host = ENV.apiBase;
+}
+
+export default JSONAPIAdapter.extend(extension);

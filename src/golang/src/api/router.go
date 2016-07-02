@@ -23,8 +23,9 @@ import (
 // and should be defined in per-resource files
 // Other administrative api endpoints may be
 // described here
-func Init(masterConnection, certFile, keyFile string) {
+func Init(masterConnection, certFile, keyFile string) *gin.Engine {
 	r := gin.Default()
+
 	adminApi := r.Group("/admin")
 
 	publicKey, privateKey := initCert(certFile, keyFile)
@@ -59,7 +60,7 @@ func Init(masterConnection, certFile, keyFile string) {
 	players.SetupRoutes(publicApi, protectedApi)
 	teams.SetupRoutes(publicApi, protectedApi)
 
-	r.Run()
+	return r
 }
 
 func initCert(certFile, keyFile string) (*rsa.PublicKey, *rsa.PrivateKey) {
