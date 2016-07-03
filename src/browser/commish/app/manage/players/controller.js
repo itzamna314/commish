@@ -9,6 +9,9 @@ export default Ember.Controller.extend({
       this.set('selectedPlayer', this.store.createRecord('players'));
     },
     cancel() {
+      if (this.get('selectedPlayer.isNew')) {
+        this.get('selectedPlayer').deleteRecord();
+      }
       this.set('selectedPlayer', null);
       this.get('model.players').forEach( (p) => {
         p.set('isSelected', false);
