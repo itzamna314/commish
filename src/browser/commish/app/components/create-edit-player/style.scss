@@ -12,6 +12,12 @@
   justify-content: space-between;
 }
 
+.right-buttons {
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  display: flex;
+}
+
 .form-fields, .field {
   display: flex;
   flex-direction: column;

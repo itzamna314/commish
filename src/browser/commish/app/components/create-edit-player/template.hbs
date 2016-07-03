@@ -1,7 +1,10 @@
 <div class="action-buttons">
-  <button {{action "createPlayer"}}>Create New</button>
+  <a class="button {{if selectedPlayer "disabled"}}" {{action "createPlayer"}}>Create New</a>
   {{#if selectedPlayer}}
-  <button {{action "submitPlayer"}}>Save</button>
+  <div class="right-buttons">
+    <a class="button" {{action "cancelPlayer"}}>Cancel</a>
+    <a class="button" {{action "submitPlayer"}}>Save</a>
+  </div>
   {{/if}}
 </div>
 
@@ -23,9 +26,9 @@
   </div>
 </div>
 
-<div class="action-buttons">
-  <button {{action "createPlayer"}}>Create New</button>
-  <button {{action "submitPlayer"}}>Save</button>
+<div class="right-buttons">
+  <a class="button" {{action "cancelPlayer"}}>Cancel</a>
+  <a class="button" {{action "submitPlayer"}}>Save</a>
 </div>
 {{/if}}
 

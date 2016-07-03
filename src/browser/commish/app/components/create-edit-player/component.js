@@ -6,6 +6,9 @@ export default Ember.Component.extend({
     createPlayer() {
       this.get('onCreatePlayer')();
     },
+    cancelPlayer() {
+      this.get('onCancelPlayer')();
+    },
     submitPlayer() { 
       this.get('onSubmitPlayer')();
     }
