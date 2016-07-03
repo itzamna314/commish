@@ -1,0 +1,39 @@
+& {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+
+  .row:nth-child(2n+3) {
+    background: #DDDDDD; 
+  }
+ 
+  .row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    
+    &:hover {
+      background: #FFDEAD;
+    }
+
+    &.selected {
+      background: #FFDEAD;
+    }
+  }
+
+  .header-row:hover {
+    background: #FFFFFF;
+  }
+
+  .header-column {
+    font-weight: bold;
+  }
+
+  .column {
+    width: 33%;
+  }
+}

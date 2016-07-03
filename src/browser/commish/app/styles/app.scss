@@ -1,10 +1,8 @@
-.column {
-  display: inline-block;
-  width: 100px;
-}
-
-.row {
-  display: block;
-}
-
 @import "pod-styles";
+@import "font-awesome";
+
+@import "./app/manage/players/style.scss";
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}

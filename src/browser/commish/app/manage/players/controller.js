@@ -2,9 +2,6 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   actions: {
-    onUpdate(filter) {
-      this.set('model.players', this.store.query('players', { name: filter.get('text') }));
-    },
     selected(player) {
       this.set('selectedPlayer', player);
     },
@@ -13,6 +10,7 @@ export default Ember.Controller.extend({
     },
     submit() {
       this.get('selectedPlayer').save();
+      this.set('selectedPlayer', null);
     }
   }
 });

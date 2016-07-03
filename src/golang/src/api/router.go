@@ -26,7 +26,7 @@ import (
 func Init(masterConnection, certFile, keyFile string) *gin.Engine {
 	r := gin.Default()
 
-	adminApi := r.Group("/admin")
+	adminApi := r.Group("/api/admin")
 
 	publicKey, privateKey := initCert(certFile, keyFile)
 	adminRouter := admin.Router{

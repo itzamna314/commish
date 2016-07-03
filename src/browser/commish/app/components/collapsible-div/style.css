@@ -1,0 +1,13 @@
+&.hide {
+  .content {
+    max-height: 0;
+  }
+}
+
+& {
+  .content {
+    transition: max-height .5s ease-out;
+    overflow-y: hidden;
+    max-height: 30px;
+  }
+}

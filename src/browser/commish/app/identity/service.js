@@ -1,31 +1,46 @@
 import Ember from 'ember';
-import ENV from 'commish/config/environment';
 
 export default Ember.Service.extend({
+  store: Ember.inject.service(),
   username: null,
   token: null,
-  getToken (username, password, demandNew) {
-    this.username = username;
+  init () {
+    let username = window.localStorage.getItem('username');
+    let token = window.localStorage.getItem('token');
+    if ( username && token ) {
+      this.set('username', username);
+      this.set('token', token);
+    }
+  },
+  loadIdentity (username, password, demandNew) {
+    this.set('username', username);
 
     if (this.token && !demandNew) {
-      return new Ember.Promise((resolve /*, reject*/) => {
+      return new Ember.RSVP.Promise((resolve /*, reject*/) => {
         resolve(this.get('token'));
       }); 
     }
 
-    return new Ember.Promise( (resolve, reject) => {
-      Ember.$.ajax(ENV.BaseUrl + '/admin/logins', {
-        data: {
+    return new Ember.RSVP.Promise( (resolve, reject) => {
+      let adapter = Ember.getOwner(this).lookup("adapter:application");
+      let host = adapter.get('host') || window.location.host;
+      let namespace = adapter.get('namespace');
+      Ember.$.ajax(`http://${host}/${namespace}/admin/logins`, {
+        contentType: 'application/json',
+        data: JSON.stringify({
           identifier: username,
           password: password
-        },
+        }),
         dataType: 'json',
+        method: 'POST',
         success: (data, status) => {
-          if ( status === '200' ) {
-            this.set('token', data);
-            resolve('foobar');
+          if ( data && data.user && data.user.token ) {
+            this.set('token', data.user.token);
+            window.localStorage.setItem('username', username);
+            window.localStorage.setItem('token', this.get('token'));
+            resolve(this.get('token'));
           } else {
-            reject(`Received non-OK success from server: ${status}`);
+            reject(`Did not receive a token: ${status}`);
           }
         },
         error: (data, status) => {

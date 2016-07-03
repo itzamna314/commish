@@ -17,8 +17,4 @@ var extension = {
   }
 };
 
-if (ENV.apiBase) {
-  extension.host = ENV.apiBase;
-}
-
 export default JSONAPIAdapter.extend(extension);

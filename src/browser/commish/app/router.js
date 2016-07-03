@@ -9,6 +9,7 @@ Router.map(function() {
   this.route('manage', function() {
     this.route('players');
   });
+  this.route('login');
 });
 
 export default Router;

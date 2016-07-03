@@ -1,13 +1,27 @@
-<h5>List players</h5>
+{{#if showFilters }}
+  {{#collapsible-div as |collapse|}}
+    {{#if collapse.isTitle}}
+      <span>Filters</span>
+    {{else if collapse.isContent}}
+      {{text-filter 
+        onUpdate=(action 'onUpdate')
+        filteredField='Name'
+        }}
+      {{/if}}
+    {{/collapsible-div}}
+{{/if}}
 
-<div class="players-list">
-    {{#each players as |player|}}
-    <div class="row" {{action "selected" player}}>
-        <div class="column">{{player.name}}</div>
-        <div class="column">{{player.age}}</div>
-        <div class="column">{{player.gender}}</div>
-    </div>
-    {{/each}}
+<div class="row header-row">
+  <div class="header-column column">Name</div>
+  <div class="header-column column">Age</div>
+  <div class="header-column column">Gender</div>
 </div>
+{{#each filteredPlayers as |player|}}
+<div class="row {{if player.isSelected "selected"}}" {{action "selected" player}}>
+    <div class="column">{{player.name}}</div>
+    <div class="column">{{player.age}}</div>
+    <div class="column">{{player.gender}}</div>
+</div>
+{{/each}}
 
 {{yield}}

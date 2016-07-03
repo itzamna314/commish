@@ -1,0 +1,9 @@
+<div>
+  {{#if identity.username}}
+    <span>Welcome, {{identity.username}}</span>
+  {{else}}
+    <button {{action "logIn"}}>Log in</button>
+  {{/if}}
+</div>
+
+{{yield}}

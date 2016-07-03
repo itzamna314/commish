@@ -1,0 +1,13 @@
+<a {{action "click"}}>
+    <div class="title">
+        {{#if hide}}
+        {{fa-icon "arrow-down"}}
+        {{else}}
+        {{fa-icon "arrow-up"}}
+        {{/if}}
+        <span>{{yield title}}</span>
+    </div>
+</a>
+<div class="content">
+    {{yield content}}
+</div>

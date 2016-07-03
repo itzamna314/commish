@@ -1,0 +1,32 @@
+<div class="action-buttons">
+  <button {{action "createPlayer"}}>Create New</button>
+  {{#if selectedPlayer}}
+  <button {{action "submitPlayer"}}>Save</button>
+  {{/if}}
+</div>
+
+{{#if selectedPlayer}}
+<div class="form-fields">
+  <div class="field">
+    <label for="{{concat elementId "name"}}">Name</label> 
+    {{input value=selectedPlayer.name id=(concat elementId "name")}}
+  </div>
+
+  <div class="field">
+    <label for="{{concat elementId "age"}}">Age</label>
+    {{input value=selectedPlayer.age id=(concat elementId "age")}}
+  </div>
+
+  <div class="field">
+    <label for="{{concat elementId "gender"}}">Gender</label>
+    {{input value=selectedPlayer.gender id=(concat elementId "gender")}}
+  </div>
+</div>
+
+<div class="action-buttons">
+  <button {{action "createPlayer"}}>Create New</button>
+  <button {{action "submitPlayer"}}>Save</button>
+</div>
+{{/if}}
+
+{{yield}}
