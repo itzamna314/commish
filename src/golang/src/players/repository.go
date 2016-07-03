@@ -9,7 +9,7 @@ import (
 type Player struct {
 	PublicId string `json:"publicId" db:"publicId"`
 	Name     string `json:"name" db:"name"`
-	Age      int    `json:"age" db:"age"`
+	Age      int    `json:"age,string" db:"age"`
 	Gender   string `json:"gender" db:"gender"`
 }
 
@@ -86,14 +86,14 @@ func (r *repo) CreatePlayer(p *Player) (*Player, error) {
 	}
 }
 
-func (r *repo) ReplacePlayer(id string, p *Player) (*Player, error) {
-	replaceStmt, err := cache.Load(r.db, "replace", replaceQuery)
+func (r *repo) UpdatePlayer(id string, p *Player) (*Player, error) {
+	updateStmt, err := cache.Load(r.db, "update", updateQuery)
 	if err != nil {
 		return nil, err
 	}
 
 	p.PublicId = id
-	res, err := replaceStmt.Exec(p)
+	res, err := updateStmt.Exec(p)
 	if err != nil {
 		return nil, err
 	}

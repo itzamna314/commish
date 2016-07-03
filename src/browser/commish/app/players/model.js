@@ -4,6 +4,6 @@ import attr from 'ember-data/attr';
 
 export default Model.extend({
   name: attr(),
-  age: attr(),
+  age: attr('number'),
   gender: attr()
 });

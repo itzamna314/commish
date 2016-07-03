@@ -16,6 +16,7 @@ func main() {
 	r := api.Init(*masterConn, *certFile, *keyFile)
 	r.StaticFile("/", "./www/index.html")
 	r.Static("/assets", "./www/assets")
+	r.Static("/fonts", "./www/fonts")
 	r.NoRoute(func(c *gin.Context) {
 		c.Redirect(301, "/")
 	})

@@ -9,8 +9,9 @@ import (
 func SetupRoutes(public *gin.RouterGroup, private *gin.RouterGroup) {
 	public.GET("/players", list)
 	public.GET("/players/:id", fetch)
+	public.POST("players/queries", find)
 	private.POST("/players", create)
-	private.PUT("/players/:id", replace)
+	private.PATCH("/players/:id", update)
 }
 
 func list(c *gin.Context) {
@@ -43,6 +44,12 @@ func fetch(c *gin.Context) {
 	}
 }
 
+func find(c *gin.Context) {
+	c.JSON(501, gin.H{
+		"message": "Not implemented",
+	})
+}
+
 func create(c *gin.Context) {
 	db := c.MustGet("connectionDb").(*sqlx.DB)
 	repo := createRepo(db)
@@ -70,7 +77,7 @@ func create(c *gin.Context) {
 	})
 }
 
-func replace(c *gin.Context) {
+func update(c *gin.Context) {
 	db := c.MustGet("connectionDb").(*sqlx.DB)
 	repo := createRepo(db)
 
@@ -91,11 +98,11 @@ func replace(c *gin.Context) {
 		return
 	}
 
-	player, err := repo.ReplacePlayer(publicId, &req)
+	player, err := repo.UpdatePlayer(publicId, &req)
 	if err != nil {
-		fmt.Printf("Failed to replace player: %s\n", err)
+		fmt.Printf("Failed to update player: %s\n", err)
 		c.JSON(500, gin.H{
-			"message": "Server failed to replace player",
+			"message": "Server failed to update player",
 		})
 		return
 	}

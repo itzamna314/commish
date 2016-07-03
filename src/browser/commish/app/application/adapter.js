@@ -1,11 +1,16 @@
 import JSONAPIAdapter from 'ember-data/adapters/json-api';
+import Ember from 'ember'; 
 import ENV from 'commish/config/environment';
 
-var extension = {
+export default JSONAPIAdapter.extend({
+  identity: Ember.inject.service(),
   namespace: 'api',
-  headers: {
-    "X-COMMISH-CONNECTION": ENV.connectionId
-  },
+  headers: Ember.computed('identity.token', function() {
+    return {
+      "X-COMMISH-CONNECTION": ENV.connectionId,
+      "Authorization": `Bearer ${this.get('identity.token')}`
+    };
+  }),
   query (store, type, query) {
     var url = this.buildURL(type.modelName, null, null, 'query', query);
 
@@ -13,8 +18,6 @@ var extension = {
       query = this.sortQueryParams(query);
     }
 
-    return this.ajax(url + '/query', 'POST', { data: query });
+    return this.ajax(url + '/queries', 'POST', { data: query });
   }
-};
-
-export default JSONAPIAdapter.extend(extension);
+});

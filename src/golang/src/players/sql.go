@@ -41,14 +41,14 @@ INSERT INTO player(Name, Age, GenderId, CreatedOn, CreatedBy)
 	 WHERE g.name = :gender;
 `
 
-	replaceQuery = `
+	updateQuery = `
 UPDATE player p
   JOIN genderType g on g.name = :gender 
-   SET p.name = :name
-     , p.age = :age
-	 , p.genderId = g.id
+   SET p.name = COALESCE(:name, p.name)
+     , p.age = COALESCE(:age, p.age)
+	 , p.genderId = COALESCE(g.id, p.genderId)
 	 , p.modifiedOn = CURRENT_TIMESTAMP
-	 , p.modifiedBy = 'players/replaceQuery'
+	 , p.modifiedBy = 'players/updateQuery'
  WHERE HEX(p.publicId) = :publicId;
 `
 )

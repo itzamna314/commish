@@ -25,13 +25,15 @@ export default function() {
     return {players: PlayersFixture};
   });
 
-  this.post('players');
+  this.post('players', (/*db, request*/) => {
+    return new Mirage.Response(201);
+  });
   this.patch('players/:id', (db, request) => { 
     var player = JSON.parse(request.requestBody);
     return {players: [player]}; 
   });
 
-  this.post('players/query', (db, request) => {
+  this.post('players/queries', (db, request) => {
     var name = JSON.parse(request.requestBody).name;
     return {
       players: PlayersFixture.filter(function(elt) { 
