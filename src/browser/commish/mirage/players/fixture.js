@@ -1,21 +1,22 @@
 export default [
   {
     "publicId":"E438746A260F11E6875C81C96BBD740C",
-    "name":"Geraldine",
-    "age":37,
-    "gender":"female"
+    "name":"Louise",
+    "age": 9,
+    "gender":"female",
+    "teams": ["D0478D02A2F2450790D48F3C541DA330"]
   },
   {
     "publicId":"02735D8C261011E6875C81C96BBD740C",
-    "name":"Gerald",
-    "age":42,
-    "gender":"male"
+    "name":"Tina",
+    "age": 14,
+    "gender":"female"
   },
   {
     "publicId":"331E1DFA261011E6875C81C96BBD740C",
-    "name":"Gerald",
-    "age":42,
-    "gender":"male"
+    "name":"Gene",
+    "age": 11,
+    "gender": "male"
   },
   {
     "publicId":"3E26CB0C261011E6875C81C96BBD740C",

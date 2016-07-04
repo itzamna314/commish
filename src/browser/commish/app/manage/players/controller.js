@@ -4,9 +4,10 @@ export default Ember.Controller.extend({
   actions: {
     selected(player) {
       this.set('selectedPlayer', player);
+      this.get('selectedPlayer.teams');
     },
     create() {
-      this.set('selectedPlayer', this.store.createRecord('players'));
+      this.set('selectedPlayer', this.store.createRecord('player'));
     },
     cancel() {
       if (this.get('selectedPlayer.isNew')) {

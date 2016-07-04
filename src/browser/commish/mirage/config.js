@@ -1,5 +1,6 @@
-import PlayersFixture from './players/fixture';
 import Mirage from 'ember-cli-mirage';
+import Players from './players/route';
+import Teams from './teams/route';
 
 export default function() {
 
@@ -21,27 +22,8 @@ export default function() {
     }
   });
 
-  this.get('players', (/*db*/) => {
-    return {players: PlayersFixture};
-  });
-
-  this.post('players', (/*db, request*/) => {
-    return new Mirage.Response(201);
-  });
-  this.patch('players/:id', (db, request) => { 
-    var player = JSON.parse(request.requestBody);
-    return {players: [player]}; 
-  });
-
-  this.post('players/queries', (db, request) => {
-    var name = JSON.parse(request.requestBody).name;
-    return {
-      players: PlayersFixture.filter(function(elt) { 
-        return !name || elt.name.toLowerCase().indexOf(name.toLowerCase()) > -1;
-      })
-      };
-    }
-  );
+  Players(this);
+  Teams(this);
 }
 
 /*

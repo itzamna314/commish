@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   classNames: ["create-edit-player"],
+  formMode: 'player',
   actions: {
     createPlayer() {
       this.get('onCreatePlayer')();
@@ -11,6 +12,18 @@ export default Ember.Component.extend({
     },
     submitPlayer() { 
       this.get('onSubmitPlayer')();
+    },
+    showTeams() {
+      this.set('formMode', 'teams');
+    },
+    showPlayer() {
+      this.set('formMode', 'player');
+    },
+    addToTeam(team) {
+      this.get('selectedPlayer.teams').pushObject(team);
+    },
+    removeFromTeam(team) {
+      this.get('selectedPlayer.teams').removeObject(team);
     }
   }
 });

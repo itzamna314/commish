@@ -22,3 +22,26 @@
   display: flex;
   flex-direction: column;
 }
+
+.form-selector {
+  display: flex;
+  flex-direction: row;
+
+  .active {
+    background-color: #3610DE;
+  }
+
+  div {
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    cursor: pointer;
+    line-height: 40px;
+    font-size: 30px;
+  }
+
+  .fa {
+    height: 40px;
+    width: 40px;
+  }
+}
