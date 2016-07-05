@@ -19,7 +19,7 @@ var (
 	cache = common.CreateScriptCache()
 )
 
-func createRepo(db *sqlx.DB) *repo {
+func CreateRepo(db *sqlx.DB) *repo {
 	return &repo{
 		db: db,
 	}

@@ -2,15 +2,25 @@ package players
 
 import (
 	"common"
+	"database/sql"
 	"fmt"
 	"github.com/jmoiron/sqlx"
 )
 
 type Player struct {
-	PublicId string `json:"publicId" db:"publicId"`
-	Name     string `json:"name" db:"name"`
-	Age      int    `json:"age,string" db:"age"`
-	Gender   string `json:"gender" db:"gender"`
+	PublicId string   `json:"publicId" db:"publicId"`
+	Name     string   `json:"name" db:"name"`
+	Age      int      `json:"age,string" db:"age"`
+	Gender   string   `json:"gender" db:"gender"`
+	Teams    []string `json:"teams"`
+}
+
+type PlayerTeamDto struct {
+	PlayerId     string         `db:"playerPublicId"`
+	PlayerName   string         `db:"playerName"`
+	PlayerAge    int            `db:"playerAge"`
+	PlayerGender string         `db:"playerGender"`
+	TeamId       sql.NullString `db:"teamPublicId"`
 }
 
 type repo struct {
@@ -21,23 +31,68 @@ var (
 	cache = common.CreateScriptCache()
 )
 
-func createRepo(db *sqlx.DB) *repo {
+func CreateRepo(db *sqlx.DB) *repo {
 	return &repo{
 		db: db,
 	}
 }
 
 func (r *repo) ListPlayers() ([]Player, error) {
+	fmt.Printf("Listing players...\n")
 	listStmt, err := cache.Load(r.db, "list", listQuery)
+	if err != nil {
+		fmt.Printf("Failed to load prepared statement\n")
+		return nil, err
+	}
+
+	fmt.Printf("Loaded prepared statement...\n")
+
+	rows, err := r.db.Query(listQuery)
 	if err != nil {
 		return nil, err
 	}
 
-	players := []Player{}
-	if err := listStmt.Select(&players, Player{}); err != nil {
+	fmt.Printf("Queried db\n")
+
+	for rows.Next() {
+		dto := PlayerTeamDto{}
+		rows.Scan(&dto.PlayerId, &dto.PlayerName, &dto.PlayerAge, &dto.PlayerGender, &dto.TeamId)
+		fmt.Printf("%+v\n", dto)
+	}
+
+	dtos := []PlayerTeamDto{}
+	if err := listStmt.Select(&dtos, PlayerTeamDto{}); err != nil {
 		return nil, err
 	}
-	return players, nil
+
+	players := make(map[string]Player)
+	for _, d := range dtos {
+		if p, ok := players[d.PlayerId]; ok {
+			if d.TeamId.Valid {
+				p.Teams = append(p.Teams, d.TeamId.String)
+			}
+		} else {
+			p = Player{
+				PublicId: d.PlayerId,
+				Name:     d.PlayerName,
+				Age:      d.PlayerAge,
+				Teams:    []string{},
+			}
+
+			if d.TeamId.Valid {
+				p.Teams = []string{d.TeamId.String}
+			}
+
+			players[d.PlayerId] = p
+		}
+	}
+
+	res := make([]Player, 0, len(players))
+	for _, v := range players {
+		res = append(res, v)
+	}
+
+	return res, nil
 }
 
 func (r *repo) FetchPlayer(id string) (*Player, error) {

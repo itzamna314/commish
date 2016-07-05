@@ -6,7 +6,7 @@
   margin-right: auto;
 
   .row:nth-child(2n+3) {
-    background: #DDDDDD; 
+    background: $row-color; 
   }
  
   .row {

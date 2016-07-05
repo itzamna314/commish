@@ -2,12 +2,15 @@ package players
 
 const (
 	listQuery = `
-SELECT HEX(p.publicId) as publicId
-     , p.name
-	 , p.age
-	 , g.name as gender
+SELECT HEX(p.publicId) as playerPublicId
+     , p.name as playerName
+	 , p.age as playerAge
+	 , g.name as playerGender
+	 , HEX(t.publicId) as teamPublicId
   FROM player p
   JOIN genderType g on g.id = p.genderId
+  LEFT JOIN playerTeam pt on pt.playerId = p.id
+  LEFT JOIN team t on t.id = pt.teamId
 `
 
 	fetchQuery = `

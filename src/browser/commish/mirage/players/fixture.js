@@ -20,13 +20,13 @@ export default [
   },
   {
     "publicId":"3E26CB0C261011E6875C81C96BBD740C",
-    "name":"Gerald",
+    "name":"Bob",
     "age":42,
     "gender":"male"
   },
   {
     "publicId":"62D8F744300C11E6A09D409B4CAB7549",
-    "name":"Geraldine",
+    "name":"Linda",
     "age":37,
     "gender":"female"
   }

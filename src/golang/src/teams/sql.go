@@ -14,6 +14,22 @@ SELECT HEX(t.publicId) as publicId
  WHERE HEX(t.publicId)=:id
 `
 
+	findFlagPlayer = 1
+
+	findQuery = `
+SELECT HEX(t.publicId) as publicId
+     , t.name
+  FROM team t
+ WHERE (
+	   $FLAGS$ & 1 = 0 
+	   OR EXISTS (SELECT 1 
+	                FROM playerTeam pt
+					JOIN player p on p.id = pt.playerId
+				   WHERE HEX(p.publicId) = :playerId
+				     AND pt.teamId = t.id)
+	   )
+`
+
 	fetchPrivateQuery = `
 SELECT HEX(t.publicId) as publicId
 	 , t.name

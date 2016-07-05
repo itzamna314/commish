@@ -15,7 +15,7 @@ func SetupRoutes(public *gin.RouterGroup, private *gin.RouterGroup) {
 
 func list(c *gin.Context) {
 	db := c.MustGet("connectionDb").(*sqlx.DB)
-	repo := createRepo(db)
+	repo := CreateRepo(db)
 	if teams, err := repo.ListTeams(); err != nil {
 		c.JSON(500, gin.H{
 			"message": fmt.Sprintf("Failed to list teams: %s", err),
@@ -30,7 +30,7 @@ func list(c *gin.Context) {
 func fetch(c *gin.Context) {
 	db := c.MustGet("connectionDb").(*sqlx.DB)
 	id := c.Param("id")
-	repo := createRepo(db)
+	repo := CreateRepo(db)
 	if team, err := repo.FetchTeam(id); err != nil {
 		fmt.Printf("Failed to fetch team: %s\n", err)
 		c.JSON(500, gin.H{
@@ -45,7 +45,7 @@ func fetch(c *gin.Context) {
 
 func create(c *gin.Context) {
 	db := c.MustGet("connectionDb").(*sqlx.DB)
-	repo := createRepo(db)
+	repo := CreateRepo(db)
 
 	req := Team{}
 	if err := c.BindJSON(&req); err != nil {
@@ -72,7 +72,7 @@ func create(c *gin.Context) {
 
 func replace(c *gin.Context) {
 	db := c.MustGet("connectionDb").(*sqlx.DB)
-	repo := createRepo(db)
+	repo := CreateRepo(db)
 
 	publicId := c.Param("id")
 	if publicId == "" {

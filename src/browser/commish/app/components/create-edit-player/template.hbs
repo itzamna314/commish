@@ -9,48 +9,83 @@
 </div>
 
 {{#if selectedPlayer}}
-    <div class="form-selector">
-        <div class="{{if (eq formMode "player") "active"}}" {{action "showPlayer"}}> 
-            {{fa-icon "user"}}
+    <div class="panes-body">
+        <div class="form-selector">
+            <div class="{{if (eq formMode "player") "active"}}" {{action "showPlayer"}}> 
+                {{fa-icon "user"}}
+            </div>
+            <div class="{{if (eq formMode "teams") "active"}}" {{action "showTeams"}}>                 
+                {{fa-icon "users"}}
+            </div>
         </div>
-        <div class="{{if (eq formMode "teams") "active"}}" {{action "showTeams"}}> 
-            {{fa-icon "users"}}
+
+        {{#if (eq formMode "teams") }}
+        <div class="team-select">
+            <div class="member-teams">
+                <div class="team-header">
+                    <span>Player's Teams</span>
+                </div>
+                <div class="team-list">
+                {{#each selectedPlayer.teams as |t|}}
+                    <div class="row member-team" {{action "removeFromTeam" t}}>
+                        <span>{{t.name}}</span>
+                        {{fa-icon "minus"}}
+                    </div>
+                {{else}}
+                    <div class="row member-team">
+                        <span>Add {{selectedPlayer.name}} to some teams...</span>
+                    </div>
+                {{/each}}
+                </div>
+            </div>
+            <div class="non-member-teams">
+                <div class="team-header">
+                    {{input value=teamNameFilter placeholder="Find a team..." class="form-field"}}
+                    <a {{action "createTeam"}} class="button {{if teamNameFilter "show"}}">
+                        Create Team
+                    </a>
+                </div>
+                <div class="team-list">
+                {{#each filteredTeams as |t|}}
+                    <div class="row non-member-team" {{action "addToTeam" t}}>
+                        <span>{{t.name}}</span>
+                        {{fa-icon "plus"}}
+                    </div>
+                {{else}}
+                <div class="row non-member-team" {{action "createTeam"}}>
+                        <span>Create new team "{{teamNameFilter}}"...</span>
+                    </div>
+                {{/each}}
+                </div>
+            </div>
         </div>
+        {{else if (eq formMode "player") }}
+            <div class="form-fields">
+                <div class="field">
+                    <label for="{{concat elementId "name"}}">Name</label> 
+                    {{input class="form-field" value=selectedPlayer.name id=(concat elementId "name")}}
+                </div>
+
+                <div class="field">
+                    <label for="{{concat elementId "age"}}">Age</label>
+                    {{input class="form-field" value=selectedPlayer.age id=(concat elementId "age")}}
+                </div>
+
+                <div class="field">
+                    <label for="{{concat elementId "gender"}}">Gender</label>
+                    {{input class="form-field" value=selectedPlayer.gender id=(concat elementId "gender")}}
+                </div>
+            </div>
+
+        {{/if}}
     </div>
-
-    {{#if (eq formMode "teams") }}
-        <div>Teams</div>
-        {{#each selectedPlayer.teams as |t|}}
-            <div class="field member-team" {{action "removeFromTeam" t}}>{{t.name}}</div>
-        {{/each}}
-        {{#each teams as |t|}}
-            <div class="field non-member-team" {{action "addToTeam" t}}>{{t.name}}</div>
-        {{/each}}
-    {{/if}}
-
-    {{#if (eq formMode "player") }}
-        <div class="form-fields">
-            <div class="field">
-                <label for="{{concat elementId "name"}}">Name</label> 
-                {{input value=selectedPlayer.name id=(concat elementId "name")}}
-            </div>
-
-            <div class="field">
-                <label for="{{concat elementId "age"}}">Age</label>
-                {{input value=selectedPlayer.age id=(concat elementId "age")}}
-            </div>
-
-            <div class="field">
-                <label for="{{concat elementId "gender"}}">Gender</label>
-                {{input value=selectedPlayer.gender id=(concat elementId "gender")}}
-            </div>
-        </div>
-
+    <div class="action-buttons">
+        <div></div>
         <div class="right-buttons">
             <a class="button" {{action "cancelPlayer"}}>Cancel</a>
             <a class="button" {{action "submitPlayer"}}>Save</a>
         </div>
-    {{/if}}
+    </div>
 {{/if}}
 
 {{yield}}

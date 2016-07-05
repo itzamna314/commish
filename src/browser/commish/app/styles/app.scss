@@ -1,3 +1,6 @@
+$row-color: #DDDDDD; 
+$border-radius: 5px;
+
 @import "pod-styles";
 @import "font-awesome";
 
@@ -10,7 +13,7 @@ body {
 a.button {
   display: inline-block;
   padding: 3px 3px 2px 2px;
-  border-radius: 5px;
+  border-radius: $border-radius;
   border: 2px solid black;
   cursor: pointer;
 
@@ -27,4 +30,12 @@ a.button {
       background-color: #EEEEEE;
     } 
   }
+}
+
+input.form-field {
+  border-radius: $border-radius;
+  font-size: 1em;
+  box-shadow: none;
+  border: 1px solid grey;
+  padding: 2px;
 }
