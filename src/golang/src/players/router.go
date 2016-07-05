@@ -56,6 +56,7 @@ func create(c *gin.Context) {
 
 	req := Player{}
 	if err := c.BindJSON(&req); err != nil {
+		fmt.Printf("Failed to bind to player: %s\n", err)
 		c.JSON(400, gin.H{
 			"message": "Failed to bind to player",
 			"error":   err,
