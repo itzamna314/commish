@@ -24,7 +24,7 @@ testem.log
 
 # Keys
 *.pem
-aws_keys.cmd
+aws_keys.sh
 
 # Deploy script
 Makefile
