@@ -1,6 +1,7 @@
 import Mirage from 'ember-cli-mirage';
 import Players from './players/route';
 import Teams from './teams/route';
+import Leagues from './leagues/route';
 
 export default function() {
 
@@ -22,8 +23,9 @@ export default function() {
     }
   });
 
-  Players(this);
-  Teams(this);
+  Players.route(this);
+  Teams.route(this);
+  Leagues.route(this);
 }
 
 /*

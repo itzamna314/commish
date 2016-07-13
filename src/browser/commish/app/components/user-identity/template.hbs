@@ -1,8 +1,14 @@
 <div>
   {{#if identity.username}}
-    <span>Welcome, {{identity.username}}</span>
+    {{#collapsible-div as |collapse|}}
+    {{#if collapse.isTitle}}
+      <span>Welcome, {{identity.username}}</span>
+    {{else if collapse.isContent}}
+      <a class="button" {{action "logOut"}}>Log Out</a>
+    {{/if}}
+    {{/collapsible-div}}
   {{else}}
-    <button {{action "logIn"}}>Log in</button>
+    <a class="button" {{action "logIn"}}>Log in</a>
   {{/if}}
 </div>
 

@@ -4,6 +4,11 @@ import { /*belongsTo, */ hasMany } from 'ember-data/relationships';
 
 export default Model.extend({
   name: attr(),
-  players: hasMany('players'),
-  leagues: hasMany('leagues')
+  location: attr(),
+  description: attr(),
+  division: attr(),
+  gender: attr(),
+  startDate: attr(),
+  endDate: attr(),
+  teams: hasMany('teams')
 });

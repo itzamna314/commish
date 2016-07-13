@@ -12,6 +12,12 @@ export default Ember.Service.extend({
       this.set('token', token);
     }
   },
+  logout() {
+    window.localStorage.removeItem('username');
+    window.localStorage.removeItem('token');
+    this.set('username', null);
+    this.set('token', null);
+  },
   loadIdentity (username, password, demandNew) {
     this.set('username', username);
 

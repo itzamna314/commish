@@ -1,12 +1,14 @@
-<div>
-  <label for="{{concat elementId "username"}}">Username</label>
-  {{input value=username id=(concat elementId "username")}}
-  <label for="{{concat elementId "password"}}">Password</label>
-  {{input value=password id=(concat elementId "password")}}
+<div class="login">
+  <div class="login-form">
+    <label for="{{concat elementId "username"}}">Username</label>
+    {{input value=username id=(concat elementId "username")}}
+    <label for="{{concat elementId "password"}}">Password</label>
+    {{input type="password" value=password id=(concat elementId "password")}}
+  </div>
+
+  <a class="button login-button" {{action 'login'}}>Go</a>
+
+  {{outlet}}
 </div>
-
-<button {{action 'login'}}>Go</button>
-
-{{outlet}}
 
 

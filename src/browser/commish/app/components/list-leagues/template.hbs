@@ -1,0 +1,20 @@
+{{yield}}
+
+<div class="resource-list">
+  <div class="row header-row">
+    <div class="header-column column">Name</div>
+    <div class="header-column column">Division</div>
+    <div class="header-column column">Gender</div>
+    <div class="header-column column">Start Date</div>
+    <div class="header-column column">End Date</div>
+  </div>
+  {{#each filteredLeagues as |league|}}
+  <div class="row {{if league.isSelected "selected"}}" {{action "selected" league}}>
+      <div class="column">{{league.name}}</div>
+      <div class="column">{{league.division}}</div>
+      <div class="column">{{league.gender}}</div>
+      <div class="column">{{league.startDate}}</div>
+      <div class="column">{{league.endDate}}</div>
+  </div>
+  {{/each}}
+</div>

@@ -47,7 +47,7 @@
   display: flex;
   flex-direction: column;
   border: 1px solid black;
-  border-radius: 5px;
+  border-radius: $border-radius;
 
   .active {
     background-color: #3610DE;
@@ -107,7 +107,7 @@
 
   .team-list {
     border: 1px solid black;
-    border-radius: 5px;
+    border-radius: $border-radius;
     margin-top: 5px;
     height: 150px;
     .row {

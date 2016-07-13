@@ -11,12 +11,12 @@ export default JSONAPISerializer.extend({
         let attrs = {};
         let rels = {};
 
-        type.eachAttribute( (name, meta) => {
+        type.eachAttribute( (name/*, meta*/) => {
           attrs[name] = res[name];
         });
 
         type.eachRelationship( (name, meta) => {
-          let rel = undefined;
+          let rel = null;
 
           if ( meta.kind === 'hasMany' ) {
             if (!res[name]) { 
@@ -29,7 +29,7 @@ export default JSONAPISerializer.extend({
                     id: d
                   };
                 })
-              }
+              };
             }
           } else if (meta.kind === 'belongsTo') {
             if (!res[name]) {

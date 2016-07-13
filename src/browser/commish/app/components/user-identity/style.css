@@ -1,7 +1,12 @@
 & {
   margin-bottom: 10px;
-}
 
-button {
-  padding: 5px;
+  .content {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .content a {
+    margin-top: 2px;
+  }
 }

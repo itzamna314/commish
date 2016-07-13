@@ -5,6 +5,9 @@
 }
 
 & {
+  .title {
+    cursor: pointer;
+  }
   .content {
     transition: max-height .5s ease-out;
     overflow-y: hidden;
