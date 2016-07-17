@@ -1,0 +1,13 @@
+<div class="resource-list">
+  <div class="column">
+    <div class="header">Name</div>
+    {{#each rows as |row|}}
+    <div class="row {{if row.selected "selected"}} {{if row.isHovered "hover"}}"
+         {{action "rowSelected" row}}>
+      {{resource-list/cell record=row value=row.name}}
+      </div>
+    {{/each}}
+  </div>
+</div>
+
+{{yield}}

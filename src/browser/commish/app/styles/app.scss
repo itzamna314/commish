@@ -1,6 +1,11 @@
-$row-color: #DDDDDD; 
 $border-radius: 5px;
 $background-color: #ffffe5;
+$highlight-color: #dddddd;
+$hover-background-color: #87cefa;
+$active-color: #bcdf8a;
+$button-background-color: #ffffff;
+$disabled-background-color: #eeeeee;
+$disabled-text-color: #bbbbbb;
 
 @import "pod-styles";
 @import "font-awesome";
@@ -19,19 +24,19 @@ a.button {
   border-radius: $border-radius;
   border: 2px solid black;
   cursor: pointer;
-  background-color: #FFFFFF;
+  background-color: $button-background-color;
 
   &:hover {
-    background-color: #DDEEFF;
+    background-color: $hover-background-color;
   }
 
   &.disabled {
-    color: #BBBBBB;
-    background-color: #EEEEEE;
+    color: $disabled-text-color; 
+    background-color: $disabled-background-color; 
     cursor: default; 
 
-    &.hover {
-      background-color: #EEEEEE;
+    &:hover {
+      background-color: $disabled-background-color;
     } 
   }
 }
@@ -44,39 +49,48 @@ input.form-field {
   padding: 2px;
 }
 
+div.resource-filters {
+    display: flex;
+    flex-direction: row;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 div.resource-list {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
 
+  .column {
+    flex: 1 1 auto;
+  }
+
   .row:nth-child(2n+3) {
-    background: $row-color; 
+    background: $highlight-color; 
   }
  
   .row {
     display: flex;
     flex-direction: row;
-    width: 100%;
-    padding-top: 2px;
-    padding-bottom: 2px;
     cursor: pointer;
     
-    &:hover {
-      background: #FFDEAD;
+    &:hover, &.hover{
+      background: $hover-background-color;
     }
 
     &.selected {
-      background: #FFDEAD;
+      background: $active-color;
     }
   }
 
-  .header-row:hover {
-    background: #FFFFFF;
-  }
-
-  .header-column {
+  .header {
     font-weight: bold;
+    text-transform: capitalize;
+     &:hover {
+       background-color: initial;
+     }
   }
 }

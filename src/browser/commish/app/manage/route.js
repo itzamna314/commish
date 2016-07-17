@@ -6,5 +6,6 @@ export default Ember.Route.extend({
     if ( !this.get('identity.token') ) {
       this.transitionTo('/login');
     }
-  }
+  },
+  
 });

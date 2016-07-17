@@ -1,10 +1,11 @@
 import Ember from 'ember';
+import ResourceList from 'commish/components/resource-list/component';
 
-export default Ember.Component.extend({
-  filteredPlayers: null,
+export default ResourceList.extend({
+  rows: null,
   init() {
     this._super(...arguments);
-    this.set('filteredPlayers', this.get('players'));
+    this.set('rows', this.get('players'));
   },
   actions: {
     selected (player) {
@@ -14,11 +15,11 @@ export default Ember.Component.extend({
       player.set('isSelected', true);
       this.get('selected')(player);
     },
-    onUpdate(filter) {
+    filter(filter) {
       let filtered = this.get('players').filter( (p) => {
-        return p.get('name').toLowerCase().indexOf(filter.get('text').toLowerCase()) > -1;
+        return filter(p);
       });
-      this.set('filteredPlayers', filtered); 
+      this.set('rows', filtered); 
     }
   }
 });

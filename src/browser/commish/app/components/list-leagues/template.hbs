@@ -1,20 +1,56 @@
-{{yield}}
+{{text-filter
+  placeholder="Search Names..."
+  onUpdate=(action 'filter')
+  filterField='name'  
+}}
+
 
 <div class="resource-list">
-  <div class="row header-row">
-    <div class="header-column column">Name</div>
-    <div class="header-column column">Division</div>
-    <div class="header-column column">Gender</div>
-    <div class="header-column column">Start Date</div>
-    <div class="header-column column">End Date</div>
+  <div class="column">
+    <div class="header">Name</div>
+    {{#each rows as |row|}}
+      <div class="row {{if row.selected "selected"}} {{if row.isHovered "hover"}}"
+           {{action "rowSelected" row}}>
+        {{resource-list/cell record=row value=row.name}}
+        </div>
+    {{/each}}
   </div>
-  {{#each filteredLeagues as |league|}}
-  <div class="row {{if league.isSelected "selected"}}" {{action "selected" league}}>
-      <div class="column">{{league.name}}</div>
-      <div class="column">{{league.division}}</div>
-      <div class="column">{{league.gender}}</div>
-      <div class="column">{{league.startDate}}</div>
-      <div class="column">{{league.endDate}}</div>
+  <div class="column">
+    <div class="header">Location</div>
+    {{#each rows as |row|}}
+      <div class="row {{if row.selected "selected"}} {{if row.isHovered "hover"}}"
+           {{action "rowSelected" row}}>
+        {{resource-list/cell record=row value=row.location}}
+        </div>
+    {{/each}}
   </div>
-  {{/each}}
+  <div class="column">
+    <div class="header">Division</div>
+    {{#each rows as |row|}}
+      <div class="row {{if row.selected "selected"}} {{if row.isHovered "hover"}}"
+           {{action "rowSelected" row}}>
+        {{resource-list/cell record=row value=row.division}}
+        </div>
+    {{/each}}
+  </div>
+  <div class="column">
+    <div class="header">Start Date</div>
+    {{#each rows as |row|}}
+      <div class="row {{if row.selected "selected"}} {{if row.isHovered "hover"}}"
+           {{action "rowSelected" row}}>
+        {{resource-list/cell record=row value=row.startDate}}
+        </div>
+    {{/each}}
+  </div>
+  <div class="column">
+    <div class="header">End Date</div>
+    {{#each rows as |row|}}
+      <div class="row {{if row.selected "selected"}} {{if row.isHovered "hover"}}"
+           {{action "rowSelected" row}}>
+        {{resource-list/cell record=row value=row.endDate}}
+        </div>
+    {{/each}}
+  </div>
 </div>
+
+{{yield}}

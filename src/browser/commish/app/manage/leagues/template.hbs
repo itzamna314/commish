@@ -1,7 +1,16 @@
 {{list-leagues
-    leagues=model.leagues
-    selected=(action 'selected')
-    showFilters=true
+  selected=(action 'selected')
+  leagues=model.leagues
+  headers=model.headers
+}}
+
+{{create-edit-league
+  selectedLeague=selectedLeague
+  teams=model.teams
+  onCreateLeague=(action 'createLeague')
+  onCreateTeam=(action 'createTeam')
+  onCancelLeague=(action 'cancel')
+  onSubmitLeague=(action 'submit')
 }}
 
 {{outlet}}

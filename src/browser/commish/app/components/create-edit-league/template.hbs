@@ -1,0 +1,106 @@
+<div class="action-buttons">
+  <a class="button {{if selectedLeague "disabled"}}" {{action "createLeague"}}>Create New</a>
+  {{#if selectedLeague}}
+      <div class="right-buttons">
+        <a class="button" {{action "cancelLeague"}}>Cancel</a>
+        <a class="button" {{action "submitLeague"}}>Save</a>
+      </div>
+  {{/if}}
+</div>
+
+{{#if selectedLeague}}
+    <div class="panes-body">
+        <div class="form-selector">
+            <div class="{{if (eq formMode "league") "active"}}" {{action "showLeague"}}> 
+                {{fa-icon "user"}}
+            </div>
+            <div class="{{if (eq formMode "teams") "active"}}" {{action "showTeams"}}>                 
+                {{fa-icon "users"}}
+            </div>
+        </div>
+
+        {{#if (eq formMode "teams") }}
+        <div class="team-select">
+            <div class="member-teams">
+                <div class="team-header">
+                    <span>League's Teams</span>
+                </div>
+                <div class="team-list">
+                {{#each selectedLeague.teams as |t|}}
+                    <div class="row member-team" {{action "removeFromTeam" t}}>
+                        <span>{{t.name}}</span>
+                        {{fa-icon "minus"}}
+                    </div>
+                {{else}}
+                    <div class="row member-team">
+                        <span>Add {{selectedLeague.name}} to some teams...</span>
+                    </div>
+                {{/each}}
+                </div>
+            </div>
+            <div class="non-member-teams">
+                <div class="team-header">
+                    {{input value=teamNameFilter placeholder="Find a team..." class="form-field"}}
+                    <a {{action "createTeam"}} class="button {{if teamNameFilter "show"}}">
+                        Create Team
+                    </a>
+                </div>
+                <div class="team-list">
+                {{#each filteredTeams as |t|}}
+                    <div class="row non-member-team" {{action "addToTeam" t}}>
+                        <span>{{t.name}}</span>
+                        {{fa-icon "plus"}}
+                    </div>
+                {{else}}
+                <div class="row non-member-team" {{action "createTeam"}}>
+                        <span>Create new team "{{teamNameFilter}}"...</span>
+                    </div>
+                {{/each}}
+                </div>
+            </div>
+        </div>
+        {{else if (eq formMode "league") }}
+            <div class="form-fields">
+                <div class="field">
+                    <label for="{{concat elementId "name"}}">Name</label> 
+                    {{input class="form-field" value=selectedLeague.name id=(concat elementId "name")}}
+                </div>
+
+                <div class="field">
+                    <label for="{{concat elementId "location"}}">Location</label>
+                    {{input class="form-field" value=selectedLeague.location id=(concat elementId "location")}}
+                </div>
+                
+                <div class="field">
+                    <label for="{{concat elementId "division"}}">Division</label>
+                    {{input class="form-field" value=selectedLeague.division id=(concat elementId "division")}}
+                </div>
+
+                <div class="field">
+                    <label for="{{concat elementId "gender"}}">Gender</label>
+                    {{input class="form-field" value=selectedLeague.gender id=(concat elementId "gender")}}
+                </div>
+
+                <div class="field">
+                    <label for="{{concat elementId "startDate"}}">Start Date</label>
+                    {{input type="date" class="form-field" value=selectedLeague.startDate id=(concat elementId "startDate")}}
+                </div>
+
+                <div class="field">
+                    <label for="{{concat elementId "endDate"}}">End Date</label>
+                    {{input type="date" class="form-field" value=selectedLeague.endDate id=(concat elementId "endDate")}}
+                </div>
+            </div>
+
+        {{/if}}
+    </div>
+    <div class="action-buttons">
+        <div></div>
+        <div class="right-buttons">
+            <a class="button" {{action "cancelLeague"}}>Cancel</a>
+            <a class="button" {{action "submitLeague"}}>Save</a>
+        </div>
+    </div>
+{{/if}}
+
+{{yield}}
