@@ -94,3 +94,11 @@ div.resource-list {
      }
   }
 }
+
+div.resource-list-header {
+  display: flex;
+  flex-direction: row;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}

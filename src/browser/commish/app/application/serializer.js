@@ -4,7 +4,7 @@ import Ember from 'ember';
 
 export default JSONAPISerializer.extend({
   inflector: new Ember.Inflector(Ember.Inflector.defaultRules),
-  singularRequests: ['updateRecord'],
+  singularRequests: ['updateRecord', 'findRecord'],
   normalizeResponse (store, type, payload, id, requestType) {
     let data = _.reduce(payload, (accum, resources, resourceName) => {
       return accum.concat(_.map(resources, (res) => {
@@ -38,7 +38,7 @@ export default JSONAPISerializer.extend({
               rel = {
                 "data": {
                   type: meta.type,
-                  id: res[name][0]
+                  id: res[name]
                 }
               }; 
             }

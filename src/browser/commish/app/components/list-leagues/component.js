@@ -1,14 +1,13 @@
-import Ember from 'ember';
 import ResourceList from 'commish/components/resource-list/component';
 
-export default Ember.Component.extend({
+export default ResourceList.extend({
   rows: null,
   init() {
     this._super(...arguments);
     this.set('rows', this.get('leagues'));
   },
   actions: {
-    selected (league) {
+    rowSelected (league) {
       this.get('leagues').forEach( (l) => {
         l.set('isSelected', false);
       });

@@ -1,0 +1,41 @@
+<div class="team-select">
+  <div class="member-teams">
+    <div class="team-header">
+      <span>Teams</span>
+    </div>
+    <div class="team-list">
+      {{#each league.teams as |t|}}
+        <div class="row member-team" {{action "removeFromLeague" t}}>
+          <span>{{t.name}}</span>
+          {{fa-icon "minus"}}
+        </div>
+      {{else}}
+        <div class="row member-team">
+          <span>Add some teams to {{league.name}}...</span>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+  <div class="non-member-teams">
+    <div class="team-header">
+      {{input value=teamNameFilter placeholder="Find a team..." class="form-field"}}
+      <a {{action "createTeam"}} class="button {{if teamNameFilter "show"}}">
+        Create Team
+      </a>
+    </div>
+    <div class="team-list">
+      {{#each filteredTeams as |t|}}
+        <div class="row non-member-team" {{action "addToLeague" t}}>
+          <span>{{t.name}}</span>
+          {{fa-icon "plus"}}
+        </div>
+      {{else}}
+        <div class="row non-member-team" {{action "createTeam"}}>
+          <span>Create new team "{{teamNameFilter}}"...</span>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
+
+{{yield}}

@@ -1,0 +1,44 @@
+{{#if leagueTable}}
+<div class="resource-list">
+  <div class="column">
+    <div class="header">Name</div>
+    {{#each leagueTable as |row|}}
+      <div class="row {{if row.selected "selected"}} {{if row.isHovered "hover"}}"
+           {{action "rowSelected" row}}>
+        {{resource-list/cell record=row value=row.team.name}}
+        </div>
+    {{/each}}
+  </div>
+  <div class="column">
+    <div class="header">Games Played</div>
+    {{#each leagueTable as |row|}}
+      <div class="row {{if row.selected "selected"}} {{if row.isHovered "hover"}}"
+           {{action "rowSelected" row}}>
+        {{resource-list/cell record=row value=row.gamesPlayed}}
+      </div>
+    {{/each}}
+  </div>
+  <div class="column">
+    <div class="header">Wins</div>
+    {{#each leagueTable as |row|}}
+      <div class="row {{if row.selected "selected"}} {{if row.isHovered "hover"}}"
+           {{action "rowSelected" row}}>
+        {{resource-list/cell record=row value=row.wins}}
+      </div>
+    {{/each}}
+  </div>
+  <div class="column">
+    <div class="header">Losses</div>
+    {{#each leagueTable as |row|}}
+      <div class="row {{if row.selected "selected"}} {{if row.isHovered "hover"}}"
+           {{action "rowSelected" row}}>
+        {{resource-list/cell record=row value=row.losses}}
+      </div>
+    {{/each}}
+  </div>
+</div>
+{{else}}
+<span>Loading...</span>
+{{/if}}
+
+{{yield}}

@@ -1,0 +1,42 @@
+export default [
+  {
+    "publicId": "8523F913717D41399BFA3FDAE7347000",
+    "homeTeam": "F723488B0E9A4393958E3BFA057B208A",
+    "awayTeam": "D0478D02A2F2450790D48F3C541DA330",
+    "league": "E86E84B9E5C0436E84F11151A5DF122B",
+    "games": ["98938293F3F04949851CA2768FCF9C11"],
+    "state": "completed"
+  },
+  {
+    "publicId": "BEEBEB079071449EB0167F8BAF04FB31",
+    "homeTeam": "5940B301300B4B4E9BC3AAEC51B2BA12",
+    "awayTeam": "701DCE1FBD284EB8A4063484AD6AF104",
+    "league": "50EB35AB3FF64E2BA103866BB61A4895",
+    "games": ["FEE597E3A2A247C0B502F95B21486CAE"],
+    "state": "completed"
+  },
+  {
+    "publicId": "6BE3226D31B14B5C9B40B7DE2653A3C7",
+    "homeTeam": "701DCE1FBD284EB8A4063484AD6AF104",
+    "awayTeam": "E5613DDAE4EE468C8D7922413DF61C13",
+    "league": "50EB35AB3FF64E2BA103866BB61A4895",
+    "games": ["16061CCA84B246B7A2505A13A35C9984"],
+    "state": "completed"
+  },
+  {
+    "publicId": "71D0C695670943A5BF1E6B562EF884A5",
+    "homeTeam": "5940B301300B4B4E9BC3AAEC51B2BA12",
+    "awayTeam": "E5613DDAE4EE468C8D7922413DF61C13",
+    "league": "50EB35AB3FF64E2BA103866BB61A4895",
+    "games": ["063C63C40F694318B59E6BC27B95A467"],
+    "state": "completed"
+  },
+  {
+    "publicId": "MATCH01",
+    "homeTeam": "TEAM01",
+    "awayTeam": "TEAM02",
+    "league": "LEAGUE01",
+    "games": ["GAME01"],
+    "state": "completed"
+  }
+];

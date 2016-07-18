@@ -32,11 +32,8 @@ export default Ember.Component.extend({
       this.set('teamNameFilter', null);
       this.get('onSubmitLeague')();
     },
-    showTeams() {
-      this.set('formMode', 'teams');
-    },
-    showLeague() {
-      this.set('formMode', 'league');
+    switchMode(mode) {
+      this.set('formMode', mode);
     },
     addToTeam(team) {
       this.get('selectedLeague.teams').pushObject(team);

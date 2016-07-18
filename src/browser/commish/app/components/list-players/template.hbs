@@ -1,8 +1,17 @@
-{{text-filter
-  placeholder="Search Names..."
-  onUpdate=(action 'filter')
-  filterField='name'  
-}}
+<div class="resource-list-header">
+  {{#collapsible-div as |collapse|}}
+    {{#if collapse.isTitle}}
+      <span>Filter Leagues</span>
+    {{/if}}
+    {{#if collapse.isContent}}
+      {{text-filter
+        placeholder="Search Names..."
+        onUpdate=(action 'filter')
+        filterField='name'  
+        }}
+      {{/if}}
+    {{/collapsible-div}}
+</div>
 
 <div class="resource-list">
   <div class="column">

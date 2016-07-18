@@ -7,6 +7,14 @@ export default  {
       return {teams: TeamsFixture};
     });
 
+    router.get('teams/:id', (db, request) => {
+      return {
+        matches: TeamsFixture.filter(function(elt) {
+          return elt.publicId === request.params.id;
+        })
+      };
+    });
+
     router.post('teams', (/*db, request*/) => {
       return new Mirage.Response(201);
     });

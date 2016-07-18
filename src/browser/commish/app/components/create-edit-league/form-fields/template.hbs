@@ -1,0 +1,33 @@
+<div class="form-fields">
+  <div class="field">
+    <label for="{{concat elementId "name"}}">Name</label> 
+    {{input class="form-field" value=league.name id=(concat elementId "name")}}
+  </div>
+
+  <div class="field">
+    <label for="{{concat elementId "location"}}">Location</label>
+    {{input class="form-field" value=league.location id=(concat elementId "location")}}
+  </div>
+
+  <div class="field">
+    <label for="{{concat elementId "division"}}">Division</label>
+    {{input class="form-field" value=league.division id=(concat elementId "division")}}
+  </div>
+
+  <div class="field">
+    <label for="{{concat elementId "gender"}}">Gender</label>
+    {{input class="form-field" value=league.gender id=(concat elementId "gender")}}
+  </div>
+
+  <div class="field">
+    <label for="{{concat elementId "startDate"}}">Start Date</label>
+    {{input type="date" class="form-field" value=league.startDate id=(concat elementId "startDate")}}
+  </div>
+
+  <div class="field">
+    <label for="{{concat elementId "endDate"}}">End Date</label>
+    {{input type="date" class="form-field" value=league.endDate id=(concat elementId "endDate")}}
+  </div>
+</div>
+
+{{yield}}

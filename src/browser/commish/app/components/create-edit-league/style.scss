@@ -18,24 +18,6 @@
   display: flex;
 }
 
-.form-fields {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  margin-left: 5px;
-
-  .field {
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-
-    .form-field {
-      margin-top: 2px;
-      margin-left: 10px;
-    }
-  }
-}
-
 .panes-body {
   display: flex;
   flex-direction: row;
@@ -72,73 +54,3 @@
     width: 40px;
   }
 }
-
-.team-select {
-  display: flex;
-  flex-direction: row;
-  margin-top: 10px;
-  flex-grow: 1;
-
-  .member-teams,.non-member-teams {
-    width: 50%;
-    flex-shrink: 1;
-    margin-left: 5px;
-    margin-right: 5px;
-  }
-
-  .member-teams {
-    .team-list .fa {
-      color: red;
-    }
-
-    .team-header {
-      padding: 3px;
-    }
-  }
-
-  .non-member-teams {
-    .team-list .fa {
-      color: green;
-    }
-
-    .team-header a.button {
-      display:none;
-      &.show {
-        display: initial;
-      }
-    }
-  }
-
-  .team-list {
-    border: 1px solid black;
-    border-radius: $border-radius;
-    margin-top: 5px;
-    height: 150px;
-    .row {
-      padding: 2px;
-      padding-left: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      .fa {
-        display: none;
-        margin-right: 20px;
-      }
-
-      &:hover .fa {
-        display: initial;
-      }
-    }
-    .row:nth-child(2n) {
-      background-color: $highlight-color;
-    }
-    .row:nth-last-child(1) {
-      border-radius: 0 0 $border-radius $border-radius;
-    }
-    .row:nth-child(n+5) {
-      display: none;
-    }
-  }
-}
-
