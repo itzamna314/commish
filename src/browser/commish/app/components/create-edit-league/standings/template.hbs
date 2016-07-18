@@ -3,7 +3,7 @@
   <div class="column">
     <div class="header">Name</div>
     {{#each leagueTable as |row|}}
-      <div class="row {{if row.selected "selected"}} {{if row.isHovered "hover"}}"
+      <div class="row {{if row.isSelected "selected"}} {{if row.isHovered "hovered"}}"
            {{action "rowSelected" row}}>
         {{resource-list/cell record=row value=row.team.name}}
         </div>
@@ -12,7 +12,7 @@
   <div class="column">
     <div class="header">Games Played</div>
     {{#each leagueTable as |row|}}
-      <div class="row {{if row.selected "selected"}} {{if row.isHovered "hover"}}"
+      <div class="row {{if row.isSelected "selected"}} {{if row.isHovered "hovered"}}"
            {{action "rowSelected" row}}>
         {{resource-list/cell record=row value=row.gamesPlayed}}
       </div>
@@ -21,7 +21,7 @@
   <div class="column">
     <div class="header">Wins</div>
     {{#each leagueTable as |row|}}
-      <div class="row {{if row.selected "selected"}} {{if row.isHovered "hover"}}"
+      <div class="row {{if row.isSelected "selected"}} {{if row.isHovered "hovered"}}"
            {{action "rowSelected" row}}>
         {{resource-list/cell record=row value=row.wins}}
       </div>
@@ -30,12 +30,74 @@
   <div class="column">
     <div class="header">Losses</div>
     {{#each leagueTable as |row|}}
-      <div class="row {{if row.selected "selected"}} {{if row.isHovered "hover"}}"
+      <div class="row {{if row.isSelected "selected"}} {{if row.isHovered "hovered"}}"
            {{action "rowSelected" row}}>
         {{resource-list/cell record=row value=row.losses}}
       </div>
     {{/each}}
   </div>
+</div>
+<div class="enter-result">
+    <div class="enter-result-header">
+        {{#if (eq enterResultState 'closed')}}
+            <a class="button" {{action "setEnterResultState" "pick-teams"}}>Enter a score</a>
+        {{else}}
+            <a class="button" {{action "setEnterResultState" "closed"}}>Cancel</a>
+        {{/if}}
+    </div>
+    <div class="enter-result-body">
+        {{#if (eq enterResultState 'pick-teams') }}
+            <div class="team-list">
+                <div class="header">Home Team</div>
+                <div class="rows">
+                    {{#each league.teams as |team|}}
+                        <div class="row {{if team.isHomeSelected "selected"}} {{if team.isError "error"}}"
+                             {{action "selectHomeTeam" team}}>
+                            <span>{{team.name}}</span>
+                            {{fa-icon "check"}}
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+            <div class="team-list">
+                <div class="header">Away Team</div>
+                <div class="rows">
+                    {{#each league.teams as |team|}}
+                    <div class="row {{if team.isAwaySelected "selected"}} {{if team.isError "error"}}"
+                             {{action "selectAwayTeam" team}}>
+                            <span>{{team.name}}</span>
+                            {{fa-icon "check"}}
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        {{else if (eq enterResultState 'enter-scores')}}
+            <div class="team-list">
+                <div class="header">Home Team</div>
+                <div class="rows">
+                    <div class="row selected">
+                        <span>{{enterResultHomeTeam.name}}</span>
+                        {{fa-icon "check"}}
+                    </div>
+                </div>
+                <div class="footer">
+                    {{input placeholder="Enter Score" type="number" value="enterResultHomeScore"}}
+                </div>
+            </div>
+            <div class="team-list">
+                <div class="header">Away Team</div>
+                <div class="rows">
+                    <div class="row selected">
+                        <span>{{enterResultAwayTeam.name}}</span>
+                        {{fa-icon "check"}}
+                    </div>
+                </div>
+                <div class="footer">
+                    {{input placeholder="Enter Score" type="number" value="enterResultAwayScore"}}
+                </div>
+            </div>
+        {{/if}}
+    </div>
 </div>
 {{else}}
 <span>Loading...</span>

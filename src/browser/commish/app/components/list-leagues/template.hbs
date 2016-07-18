@@ -17,7 +17,7 @@
   <div class="column">
     <div class="header">Name</div>
     {{#each rows as |row|}}
-      <div class="row {{if row.selected "selected"}} {{if row.isHovered "hover"}}"
+      <div class="row {{if row.isSelected "selected"}} {{if row.isHovered "hovered"}}"
            {{action "rowSelected" row}}>
         {{resource-list/cell record=row value=row.name}}
         </div>
@@ -26,7 +26,7 @@
   <div class="column">
     <div class="header">Location</div>
     {{#each rows as |row|}}
-      <div class="row {{if row.selected "selected"}} {{if row.isHovered "hover"}}"
+      <div class="row {{if row.isSelected "selected"}} {{if row.isHovered "hovered"}}"
            {{action "rowSelected" row}}>
         {{resource-list/cell record=row value=row.location}}
         </div>
@@ -35,7 +35,7 @@
   <div class="column">
     <div class="header">Division</div>
     {{#each rows as |row|}}
-      <div class="row {{if row.selected "selected"}} {{if row.isHovered "hover"}}"
+      <div class="row {{if row.isSelected "selected"}} {{if row.isHovered "hovered"}}"
            {{action "rowSelected" row}}>
         {{resource-list/cell record=row value=row.division}}
         </div>
@@ -44,7 +44,7 @@
   <div class="column">
     <div class="header">Start Date</div>
     {{#each rows as |row|}}
-      <div class="row {{if row.selected "selected"}} {{if row.isHovered "hover"}}"
+      <div class="row {{if row.isSelected "selected"}} {{if row.isHovered "hovered"}}"
            {{action "rowSelected" row}}>
         {{resource-list/cell record=row value=row.startDate}}
         </div>
@@ -53,7 +53,7 @@
   <div class="column">
     <div class="header">End Date</div>
     {{#each rows as |row|}}
-      <div class="row {{if row.selected "selected"}} {{if row.isHovered "hover"}}"
+      <div class="row {{if row.isSelected "selected"}} {{if row.isHovered "hovered"}}"
            {{action "rowSelected" row}}>
         {{resource-list/cell record=row value=row.endDate}}
         </div>
