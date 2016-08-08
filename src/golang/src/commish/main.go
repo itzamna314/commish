@@ -13,6 +13,8 @@ func main() {
 	keyFile := flag.String("key", "devkeys/private.pem", "private key file")
 	flag.Parse()
 
+	fmt.Printf("Using public key: %s, private key: %s", *certFile, *keyFile)
+
 	r := api.Init(*masterConn, *certFile, *keyFile)
 	r.StaticFile("/", "./www/index.html")
 	r.Static("/assets", "./www/assets")

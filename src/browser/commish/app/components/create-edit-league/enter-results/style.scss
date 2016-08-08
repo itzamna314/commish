@@ -1,0 +1,92 @@
+& {
+  display: flex;
+  flex-grow: 1;
+
+  .enter-result {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .enter-result-header {
+    margin-left: 5px;
+    display: flex;
+    flex-align-items: center;
+
+    span {
+      font-size: 16pt;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  .enter-result-body {
+    display: flex;
+    flex-direction: row;
+
+    .team-list {
+      flex-grow: 1;
+      margin-left: 5px;
+      margin-right: 5px;
+      margin-top: 10px;
+
+      .rows {
+        border: 1px solid black;
+        border-radius: $border-radius;
+      }
+
+      .footer {
+        display: flex;
+
+        input {
+          flex-grow: 1;
+          margin-top: 5px;
+        }
+      }
+    }
+
+    .row {
+      padding: 2px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .fa {
+        visibility: hidden;
+        color: green;
+      }
+
+      &.selected {
+        background: $active-color;
+        border-radius: $border-radius;
+      }
+
+      &.selected:first-child,:last-child {
+        border-radius: $border-radius;
+      }
+
+      &.selected.error {
+        background: $error-color;
+      }
+
+      &:hover .fa {
+        visibility: initial;
+      }
+
+      &:nth-child(2n+1):not(.selected){ 
+        background: $highlight-color; 
+      }
+
+      &:first-child{
+        border-radius: $border-radius $border-radius 0 0;
+      }
+
+      &:last-child{
+        border-radius: 0 0 $border-radius $border-radius;
+      }
+    }
+  }
+
+}

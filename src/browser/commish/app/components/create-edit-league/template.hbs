@@ -20,6 +20,9 @@
       <div class="{{if (eq formMode "teams") "active"}}" {{action "switchMode" "teams"}}>                 
         {{fa-icon "users"}}
       </div>
+      <div class="{{if (eq formMode "results") "active"}}" {{action "switchMode" "results"}}>
+        {{fa-icon "fa-futbol-o"}}
+      </div>
     </div>
 
 
@@ -34,6 +37,11 @@
       }}
     {{else if (eq formMode "teams") }}
       {{create-edit-league/choose-teams
+        league=selectedLeague
+        teams=teams
+      }}
+    {{else if (eq formMode "results") }}
+      {{create-edit-league/enter-results
         league=selectedLeague
         teams=teams
       }}

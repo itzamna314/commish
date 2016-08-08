@@ -1,1 +1,63 @@
+<div class="enter-result">
+  <div class="enter-result-header">
+    <span>Enter a score</span>
+    <a class="button {{if (eq state 'pick-teams') "disabled"}}" {{action "setEnterResultState" "pick-teams"}}>Cancel</a>
+  </div>
+  <div class="enter-result-body">
+    {{#if (eq state 'pick-teams') }}
+      <div class="team-list">
+        <div class="header">Home Team</div>
+        <div class="rows">
+          {{#each league.teams as |team|}}
+            <div class="row {{if team.isHomeSelected "selected"}} {{if team.isError "error"}}"
+                 {{action "selectHomeTeam" team}}>
+              <span>{{team.name}}</span>
+              {{fa-icon "check"}}
+            </div>
+          {{/each}}
+        </div>
+      </div>
+      <div class="team-list">
+        <div class="header">Away Team</div>
+        <div class="rows">
+          {{#each league.teams as |team|}}
+            <div class="row {{if team.isAwaySelected "selected"}} {{if team.isError "error"}}"
+                 {{action "selectAwayTeam" team}}>
+              <span>{{team.name}}</span>
+              {{fa-icon "check"}}
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    {{else if (eq state 'enter-scores')}}
+      <div class="team-list">
+        <div class="header">Home Team</div>
+        <div class="rows">
+          <div class="row selected">
+            <span>{{homeTeam.name}}</span>
+            {{fa-icon "check"}}
+          </div>
+        </div>
+        <div class="footer">
+          {{input class="form-field" placeholder="Enter Score" type="number" value="homeScore"}}
+        </div>
+      </div>
+      <div class="team-list">
+        <div class="header">Away Team</div>
+        <div class="rows">
+          <div class="row selected">
+            <span>{{awayTeam.name}}</span>
+            {{fa-icon "check"}}
+          </div>
+        </div>
+        <div class="footer">
+          {{input class="form-field" placeholder="Enter Score" type="number" value="awayScore"}}
+        </div>
+      </div>
+    {{/if}}
+  </div>
+  <div class="enter-result-footer">
+    <a class="button {{if (neq state 'submit-scores') "disabled"}}" {{action "setEnterResultState" "pick-teams"}}>Submit</a>
+  </div>
+</div>
 {{yield}}
