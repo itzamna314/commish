@@ -220,14 +220,14 @@ func (r *repo) clearTeamsFromPlayer(playerId string, tx *sqlx.Tx) error {
 }
 
 func (r *repo) dtosToPlayers(dtos []playerTeamDto) []Player {
-	players := make(map[string]Player)
+	players := make(map[string]*Player)
 	for _, d := range dtos {
 		if p, ok := players[d.PublicId]; ok {
 			if d.TeamId.Valid {
 				p.Teams = append(p.Teams, d.TeamId.String)
 			}
 		} else {
-			p = Player{
+			new := Player{
 				PublicId: d.PublicId,
 				Name:     d.Name,
 				Age:      d.Age,
@@ -236,16 +236,16 @@ func (r *repo) dtosToPlayers(dtos []playerTeamDto) []Player {
 			}
 
 			if d.TeamId.Valid {
-				p.Teams = []string{d.TeamId.String}
+				new.Teams = []string{d.TeamId.String}
 			}
 
-			players[d.PublicId] = p
+			players[d.PublicId] = &new
 		}
 	}
 
 	res := make([]Player, 0, len(players))
 	for _, v := range players {
-		res = append(res, v)
+		res = append(res, *v)
 	}
 
 	return res

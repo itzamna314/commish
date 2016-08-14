@@ -160,6 +160,7 @@ func (r *repo) UpdateLeague(id string, l *League) (*League, error) {
 	}
 
 	if l.Teams != nil {
+		fmt.Printf("Teams: %v\n", l.Teams)
 		if err = r.clearTeamsFromLeague(id, tx); err != nil {
 			return nil, err
 		}
@@ -227,14 +228,14 @@ func (r *repo) clearTeamsFromLeague(leagueId string, tx *sqlx.Tx) error {
 }
 
 func (r *repo) dtosToLeagues(dtos []leagueTeamDto) []League {
-	leagues := make(map[string]League)
+	leagues := make(map[string]*League)
 	for _, d := range dtos {
 		if l, ok := leagues[d.PublicId]; ok {
 			if d.TeamId.Valid {
 				l.Teams = append(l.Teams, d.TeamId.String)
 			}
 		} else {
-			l = League{
+			new := League{
 				PublicId:    d.PublicId,
 				Name:        d.Name,
 				Description: d.Description,
@@ -247,16 +248,16 @@ func (r *repo) dtosToLeagues(dtos []leagueTeamDto) []League {
 			}
 
 			if d.TeamId.Valid {
-				l.Teams = []string{d.TeamId.String}
+				new.Teams = []string{d.TeamId.String}
 			}
 
-			leagues[d.PublicId] = l
+			leagues[d.PublicId] = &new
 		}
 	}
 
 	res := make([]League, 0, len(leagues))
 	for _, v := range leagues {
-		res = append(res, v)
+		res = append(res, *v)
 	}
 
 	return res
