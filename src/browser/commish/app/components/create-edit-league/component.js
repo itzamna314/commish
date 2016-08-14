@@ -3,26 +3,12 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   classNames: ["create-edit-league"],
   formMode: 'league',
-  filteredTeams: Ember.computed('teams.@each', 'selectedLeague.teams.@each', 'teamNameFilter', function() {
-    let selectedLeague = this.get('selectedLeague');
-    return this.get('teams').filter( (item) => {
-        if ( !selectedLeague ) { return true; }
-
-        return !selectedLeague.get('teams').any( (t) => {
-          return t.get('id') === item.get('id');
-        } );
-    }).filter( (item) => {
-      let nameFilter = this.get('teamNameFilter');
-      if ( !nameFilter ) { return true; }
-      return item.get('name').toLowerCase().indexOf(nameFilter.toLowerCase()) > -1;
-    });
-  }),
   actions: {
     createLeague() {
       this.get('onCreateLeague')();
     },
-    createTeam() {
-      this.get('onCreateTeam')(this.get('teamNameFilter'));
+    createTeam(teamName) {
+      this.get('onCreateTeam')(teamName);
     },
     cancelLeague() {
       this.set('teamNameFilter', null);

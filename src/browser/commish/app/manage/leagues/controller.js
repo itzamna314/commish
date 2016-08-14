@@ -12,6 +12,7 @@ export default Ember.Controller.extend({
       this.store.createRecord('team', {name: teamName}).save().then(
         (team) => {
           this.get('selectedLeague.teams').pushObject(team);
+          this.get('model.teams').update();
         });
     },
     cancel() {

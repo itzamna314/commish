@@ -16,11 +16,8 @@ type Player struct {
 }
 
 type playerTeamDto struct {
-	PlayerId     string         `db:"playerPublicId"`
-	PlayerName   string         `db:"playerName"`
-	PlayerAge    int            `db:"playerAge"`
-	PlayerGender string         `db:"playerGender"`
-	TeamId       sql.NullString `db:"teamPublicId"`
+	Player
+	TeamId sql.NullString `db:"teamPublicId"`
 }
 
 type repo struct {
@@ -225,16 +222,16 @@ func (r *repo) clearTeamsFromPlayer(playerId string, tx *sqlx.Tx) error {
 func (r *repo) dtosToPlayers(dtos []playerTeamDto) []Player {
 	players := make(map[string]Player)
 	for _, d := range dtos {
-		if p, ok := players[d.PlayerId]; ok {
+		if p, ok := players[d.PublicId]; ok {
 			if d.TeamId.Valid {
 				p.Teams = append(p.Teams, d.TeamId.String)
 			}
 		} else {
 			p = Player{
-				PublicId: d.PlayerId,
-				Name:     d.PlayerName,
-				Age:      d.PlayerAge,
-				Gender:   d.PlayerGender,
+				PublicId: d.PublicId,
+				Name:     d.Name,
+				Age:      d.Age,
+				Gender:   d.Gender,
 				Teams:    []string{},
 			}
 
@@ -242,7 +239,7 @@ func (r *repo) dtosToPlayers(dtos []playerTeamDto) []Player {
 				p.Teams = []string{d.TeamId.String}
 			}
 
-			players[d.PlayerId] = p
+			players[d.PublicId] = p
 		}
 	}
 

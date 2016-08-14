@@ -9,8 +9,9 @@ import (
 func SetupRoutes(public *gin.RouterGroup, private *gin.RouterGroup) {
 	public.GET("/leagues", list)
 	public.GET("/leagues/:id", fetch)
+	public.POST("leagues/queries", find)
 	private.POST("/leagues", create)
-	private.PUT("/leagues/:id", replace)
+	private.PATCH("/leagues/:id", update)
 }
 
 func list(c *gin.Context) {
@@ -43,6 +44,12 @@ func fetch(c *gin.Context) {
 	}
 }
 
+func find(c *gin.Context) {
+	c.JSON(501, gin.H{
+		"message": "Not implemented",
+	})
+}
+
 func create(c *gin.Context) {
 	db := c.MustGet("connectionDb").(*sqlx.DB)
 	repo := CreateRepo(db)
@@ -70,7 +77,7 @@ func create(c *gin.Context) {
 	})
 }
 
-func replace(c *gin.Context) {
+func update(c *gin.Context) {
 	db := c.MustGet("connectionDb").(*sqlx.DB)
 	repo := CreateRepo(db)
 
@@ -79,6 +86,7 @@ func replace(c *gin.Context) {
 		c.JSON(400, gin.H{
 			"message": "Public id is required",
 		})
+		return
 	}
 
 	req := League{}
@@ -90,11 +98,11 @@ func replace(c *gin.Context) {
 		return
 	}
 
-	league, err := repo.ReplaceLeague(publicId, &req)
+	league, err := repo.UpdateLeague(publicId, &req)
 	if err != nil {
-		fmt.Printf("Failed to replace league: %s\n", err)
+		fmt.Printf("Failed to update league: %s\n", err)
 		c.JSON(500, gin.H{
-			"message": "Server failed to replace league",
+			"message": "Server failed to update league",
 		})
 		return
 	}

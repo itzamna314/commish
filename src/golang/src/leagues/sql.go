@@ -10,9 +10,12 @@ SELECT HEX(l.publicId) as publicId
 	 , g.name as gender
 	 , l.startDate
 	 , l.endDate
+	 , HEX(t.publicId) as teamPublicId
   FROM league l
   JOIN division d on d.id = l.divisionId
   JOIN genderType g on g.id = l.genderId
+  LEFT JOIN leagueTeam lt on lt.leagueId = l.id
+  LEFT JOIN team t on t.id = lt.teamId
 `
 
 	fetchQuery = `
@@ -24,9 +27,12 @@ SELECT HEX(l.publicId) as publicId
 	 , g.name as gender
 	 , l.startDate
 	 , l.endDate
+	 , HEX(t.publicId) as teamPublicId
   FROM league l
   JOIN division d on d.id = l.divisionId
   JOIN genderType g on g.id = l.genderId
+  LEFT JOIN leagueTeam lt on lt.leagueId = l.id
+  LEFT JOIN team t on t.id = lt.teamId
  WHERE HEX(l.publicId)=:id
 `
 
@@ -62,19 +68,38 @@ INSERT INTO league(name, location, description, divisionId, genderId, startDate,
 	   AND d.name = :division;
 `
 
-	replaceQuery = `
+	updateQuery = `
 UPDATE league l
-  JOIN genderType g on g.name = :gender
-  JOIN division d on d.name = :division
-   SET l.name = :name
-     , l.description = :description
-	 , l.location = :location
-	 , l.genderId = g.id
-	 , l.divisionId = d.id
-	 , l.startDate = :startDate
-	 , l.endDate = :endDate
+  LEFT JOIN genderType g on g.name = :gender
+  LEFT JOIN division d on d.name = :division
+   SET l.name = COALESCE(:name, l.name)
+     , l.description = COALESCE(:description, l.description)
+	 , l.location = COALESCE(:location, l.location)
+	 , l.genderId = COALESCE(g.id, l.genderId)
+	 , l.divisionId = COALESCE(d.id, l.divisionId)
+	 , l.startDate = COALESCE(NULLIF(:startDate, ''), l.startDate)
+	 , l.endDate = COALESCE(NULLIF(:endDate, ''), l.endDate)
      , l.modifiedOn = CURRENT_TIMESTAMP
-	 , l.modifiedBy = 'leagues/replaceQuery'
+	 , l.modifiedBy = 'leagues/updateQuery'
  WHERE HEX(l.publicId) = :publicId;
+`
+
+	addTeamQuery = `
+INSERT INTO leagueTeam (leagueId, teamId, createdOn, createdBy)
+     SELECT l.id
+	      , t.id
+		  , CURRENT_TIMESTAMP
+		  , 'leagues/addTeamQuery'
+       FROM league l
+	   JOIN team t
+	  WHERE HEX(l.publicId) = :leagueId
+	    AND HEX(t.publicId) = :teamId
+`
+
+	clearTeamsQuery = `
+DELETE lt
+  FROM leagueTeam lt
+  JOIN league l on l.id = lt.leagueId
+ WHERE HEX(l.publicId) = :id
 `
 )

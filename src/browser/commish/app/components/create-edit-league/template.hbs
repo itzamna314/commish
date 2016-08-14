@@ -39,6 +39,7 @@
       {{create-edit-league/choose-teams
         league=selectedLeague
         teams=teams
+        onCreateTeam=(action 'createTeam')
       }}
     {{else if (eq formMode "results") }}
       {{create-edit-league/enter-results
