@@ -20,7 +20,13 @@ func main() {
 	r.Static("/assets", "./www/assets")
 	r.Static("/fonts", "./www/fonts")
 	r.NoRoute(func(c *gin.Context) {
-		c.Redirect(301, "/")
+		if c.Request.Method == "GET" {
+			c.File("./www/index.html")
+		}
+
+		c.JSON(404, gin.H{
+			"message": "Endpoint not found",
+		})
 	})
 	r.Run()
 	fmt.Println("Started!")

@@ -2,10 +2,10 @@ package players
 
 const (
 	listQuery = `
-SELECT HEX(p.publicId) as playerPublicId
-     , p.name as playerName
-	 , p.age as playerAge
-	 , g.name as playerGender
+SELECT HEX(p.publicId) as publicId
+     , p.name
+	 , p.age
+	 , g.name as gender
 	 , HEX(t.publicId) as teamPublicId
   FROM player p
   JOIN genderType g on g.id = p.genderId
@@ -63,14 +63,14 @@ UPDATE player p
 
 	addToTeamQuery = `
 INSERT INTO playerTeam (playerId, teamId, createdOn, createdBy) 
-	SELECT p.id
-	     , t.id
-		 , CURRENT_TIMESTAMP
-		 , 'players/addToTeamQuery'
-	  FROM player p
-	  JOIN team t
-	 WHERE HEX(p.publicId) = :playerId
-	   AND HEX(t.publicId) = :teamId
+	 SELECT p.id
+	      , t.id
+		  , CURRENT_TIMESTAMP
+		  , 'players/addToTeamQuery'
+	   FROM player p
+	   JOIN team t
+	  WHERE HEX(p.publicId) = :playerId
+	    AND HEX(t.publicId) = :teamId
 `
 
 	clearTeamsQuery = `

@@ -235,6 +235,16 @@ create trigger before_insert_league
     for each row
     set new.publicId = UNHEX(REPLACE(UUID(), '-', ''));
     
+create table if not exists leagueTeam(
+	id int primary key not null auto_increment,
+    leagueId int not null, foreign key(leagueId) references league(id),
+    teamId int not null, foreign key(teamId) references team(id),
+	createdOn datetime not null,
+    createdBy nvarchar(32) not null,
+    modifiedOn datetime null,
+    modifiedBy nvarchar(32) null
+);    
+
 create table if not exists leagueTournament(
 	id int primary key not null auto_increment,
     leagueId int not null, foreign key(leagueId) references league(id),

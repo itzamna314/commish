@@ -24,10 +24,14 @@ func CreateRepo(db *sqlx.DB) *repo {
 	}
 }
 
-func (r *repo) CreateIfNotExists(name string) (*Division, error) {
+func (r *repo) CreateIfNotExists(name string, tx *sqlx.Tx) (*Division, error) {
 	fetchStmt, err := cache.Load(r.db, "fetch", fetchQuery)
 	if err != nil {
 		return nil, err
+	}
+
+	if tx != nil {
+		fetchStmt = tx.NamedStmt(fetchStmt)
 	}
 
 	arg := struct {
@@ -44,6 +48,10 @@ func (r *repo) CreateIfNotExists(name string) (*Division, error) {
 		createStmt, err := cache.Load(r.db, "create", createQuery)
 		if err != nil {
 			return nil, err
+		}
+
+		if tx != nil {
+			createStmt = tx.NamedStmt(createStmt)
 		}
 
 		_, err = createStmt.Exec(arg)

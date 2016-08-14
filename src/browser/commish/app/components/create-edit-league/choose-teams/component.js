@@ -2,11 +2,11 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   filteredTeams: Ember.computed('teams.[]', 'league.teams.[]', 'teamNameFilter', function() {
-    let selectedPlayer = this.get('selectedPlayer');
+    let selectedLeague = this.get('league');
     return this.get('teams').filter( (item) => {
-        if ( !selectedPlayer ) { return true; }
+        if ( !selectedLeague ) { return true; }
 
-        return !selectedPlayer.get('teams').any( (t) => {
+        return !selectedLeague.get('teams').any( (t) => {
           return t.get('id') === item.get('id');
         } );
     }).filter( (item) => {
