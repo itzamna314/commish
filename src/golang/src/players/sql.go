@@ -14,10 +14,10 @@ SELECT HEX(p.publicId) as publicId
 `
 
 	fetchQuery = `
-SELECT HEX(p.publicId) as playerPublicId
-	 , p.name as playerName
-     , p.age as playerAge
-     , g.name as playerGender
+SELECT HEX(p.publicId) as publicId
+	 , p.name as name
+     , p.age as age
+     , g.name as gender
 	 , HEX(t.publicId) as teamPublicId
   FROM player p
   JOIN genderType g on g.id = p.genderId
@@ -27,10 +27,10 @@ SELECT HEX(p.publicId) as playerPublicId
 `
 
 	fetchPrivateQuery = `
-SELECT HEX(p.publicId) as playerPublicId
-	 , p.name as playerName
-     , p.age as playerAge
-     , g.name as playerGender
+SELECT HEX(p.publicId) as publicId
+	 , p.name as name
+     , p.age as age
+     , g.name as gender
 	 , HEX(t.publicId) as teamPublicId
   FROM player p
   JOIN genderType g on g.id = p.genderId

@@ -1,1 +1,1 @@
-curl -X POST $HOST/api/players -H "Content-Type: application/json" -H "$COMMISH_AUTH" -H "$COMMISH_CONN" -d '{"name":"Teemo", "age":"17", "gender":"male", "teams":["0FEF5278286C11E6875C81C96BBD740C"]}'
+curl -X POST $HOST/api/players -H "Content-Type: application/json" -H "$COMMISH_AUTH" -H "$COMMISH_CONN" -d '{"name":"Teemo", "age":"17", "gender":"male", "teams":[]}'
