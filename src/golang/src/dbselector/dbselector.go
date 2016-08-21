@@ -68,7 +68,7 @@ func (d *dbSelector) Protected() gin.HandlerFunc {
 
 		connectionName, ok := claims["commish/connection"].(string)
 		if !ok {
-			c.AbortWithError(401, fmt.Errorf("Insufficient privilege"))
+			c.AbortWithError(401, fmt.Errorf(`Insufficient privilege: Not authorized to use any connection`))
 			return
 		}
 
@@ -78,7 +78,7 @@ func (d *dbSelector) Protected() gin.HandlerFunc {
 		}
 
 		if name != connectionName {
-			c.AbortWithError(401, fmt.Errorf("Insufficient privilege"))
+			c.AbortWithError(401, fmt.Errorf(`Insufficient privilege: allowed connection "%s", but requested connection "%s"`, connectionName, name))
 			return
 		}
 

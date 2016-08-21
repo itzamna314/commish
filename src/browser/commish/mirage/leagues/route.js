@@ -1,4 +1,4 @@
-import Mirage from 'ember-cli-mirage';
+// import Mirage from 'ember-cli-mirage';
 import LeaguesFixture from './fixture';
 
 export default {
@@ -7,8 +7,8 @@ export default {
       return {leagues: LeaguesFixture};
     });
 
-    router.post('leagues', (/*db, request*/) => {
-      return new Mirage.Response(201);
+    router.post('leagues', (db, request) => {
+      return {leagues: LeaguesFixture.push(request) };
     });
 
     router.patch('leagues/:id', (db, request) => { 

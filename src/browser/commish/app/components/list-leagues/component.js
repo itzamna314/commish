@@ -1,11 +1,17 @@
 import ResourceList from 'commish/components/resource-list/component';
+import Ember from 'ember';
 
 export default ResourceList.extend({
-  rows: null,
+  filter: null,
   init() {
     this._super(...arguments);
-    this.set('rows', this.get('leagues'));
   },
+  rows: Ember.computed('leagues.[]', 'leagues.@each.isNew', 'filter', function() {
+    let filterFn = this.get('filter');
+    return this.get('leagues').filter( (p) => {
+      return !p.get('isNew') && (!filterFn || filterFn(p));
+    });
+  }),
   actions: {
     rowSelected (league) {
       this.get('leagues').forEach( (l) => {
@@ -15,10 +21,7 @@ export default ResourceList.extend({
       this.get('selected')(league);
     },
     filter(filter) {
-      let filtered = this.get('leagues').filter( (p) => {
-        return filter(p);
-      });
-      this.set('rows', filtered); 
+      this.set('filter', filter);
     }
   }
 });

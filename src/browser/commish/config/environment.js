@@ -24,6 +24,7 @@ module.exports = function(environment) {
     ENV['ember-cli-mirage'] = {
       enabled: true
     };
+    ENV.connectionId = 'F089772C424E11E69C56973441A785A3';
   }
 
   if (environment === 'development') {

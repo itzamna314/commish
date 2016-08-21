@@ -22,10 +22,11 @@ func main() {
 	r.NoRoute(func(c *gin.Context) {
 		if c.Request.Method == "GET" {
 			c.File("./www/index.html")
+			return
 		}
 
 		c.JSON(404, gin.H{
-			"message": "Endpoint not found",
+			"message": "resource not found",
 		})
 	})
 	r.Run()
