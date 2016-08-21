@@ -20,6 +20,12 @@ module.exports = function(environment) {
     }
   };
 
+  if (environment == 'local') {
+    ENV['ember-cli-mirage'] = {
+      enabled: true
+    };
+  }
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
@@ -28,7 +34,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV['ember-cli-mirage'] = {
         enabled: false
-    }
+    };
   }
 
   if (environment === 'test') {

@@ -101,6 +101,11 @@
       color: green;
     }
 
+    .team-list {
+      overflow: hidden;
+      max-height: 150px;
+    }
+
     .team-header a.button {
       display:none;
       &.show {
@@ -113,7 +118,7 @@
     border: 1px solid black;
     border-radius: $border-radius;
     margin-top: 5px;
-    height: 150px;
+    min-height: 150px;
     .row {
       padding: 2px;
       padding-left: 10px;
@@ -135,9 +140,6 @@
     }
     .row:nth-last-child(1) {
       border-radius: 0 0 $border-radius $border-radius;
-    }
-    .row:nth-child(n+5) {
-      display: none;
     }
   }
 }

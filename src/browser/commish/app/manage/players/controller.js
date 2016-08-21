@@ -3,6 +3,10 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   actions: {
     selected(player) {
+      if (this.get('selectedPlayer.isNew')) {
+        this.get('selectedPlayer').deleteRecord();
+      }
+
       this.set('selectedPlayer', player);
     },
     createPlayer() {

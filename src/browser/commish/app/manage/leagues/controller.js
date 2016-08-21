@@ -3,6 +3,9 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   actions: {
     selected(league) {
+      if (this.get('selectedLeague.isNew')) {
+        this.get('selectedLeague').deleteRecord();
+      }
       this.set('selectedLeague', league);
     },
     createLeague() {
