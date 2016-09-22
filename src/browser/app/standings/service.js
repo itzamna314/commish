@@ -1,5 +1,4 @@
 import Ember from 'ember';
-let Promise = Ember.RSVP.Promise;
 
 export default Ember.Service.extend({
   loadLeagueTable (league) {

@@ -66,20 +66,24 @@ func Init(masterConnection, certFile, keyFile string) *gin.Engine {
 func initCert(certFile, keyFile string) (*rsa.PublicKey, *rsa.PrivateKey) {
 	cert, err := ioutil.ReadFile(certFile)
 	if err != nil {
-		panic(fmt.Sprintf("Failed to read cert file %s: %s", certFile, err))
+		fmt.Printf("Failed to read cert file %s. Aborting startup.\n\nDetails:\n%s\n", certFile, err)
+		os.Exit(1)
 	}
 	pubKey, err := jwt.ParseRSAPublicKeyFromPEM(cert)
 	if err != nil {
-		panic(fmt.Sprintf("Failed to parse cert file %s: %s", certFile, err))
+		fmt.Printf("Failed to parse cert file %s. Aborting startup.\n\nDetails:\n %s\n", certFile, err)
+		os.Exit(2)
 	}
 
 	key, err := ioutil.ReadFile(keyFile)
 	if err != nil {
-		panic(fmt.Sprintf("Failed to read key file %s: %s", keyFile, err))
+		fmt.Printf("Failed to read key file %s. Aborting startup.\n\nDetails:\n%s\n", keyFile, err)
+		os.Exit(3)
 	}
 	privKey, err := jwt.ParseRSAPrivateKeyFromPEM(key)
 	if err != nil {
-		panic(fmt.Sprintf("Failed to parse key file %s: %s", keyFile, err))
+		fmt.Printf("Failed to parse key file %s. Aborting startup.\n\nDetails:%s\n", keyFile, err)
+		os.Exit(4)
 	}
 
 	return pubKey, privKey

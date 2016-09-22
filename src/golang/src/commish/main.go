@@ -9,11 +9,11 @@ import (
 
 func main() {
 	masterConn := flag.String("conn", "WebClient@tcp(localhost:3306)/auth", "MySql connection string")
-	certFile := flag.String("cert", "devkeys/public.pem", "public key file")
-	keyFile := flag.String("key", "devkeys/private.pem", "private key file")
+	certFile := flag.String("cert", "src/devkeys/public.pem", "public key file")
+	keyFile := flag.String("key", "src/devkeys/private.pem", "private key file")
 	flag.Parse()
 
-	fmt.Printf("Using public key: %s, private key: %s", *certFile, *keyFile)
+	fmt.Printf("Using public key: %s, private key: %s\n", *certFile, *keyFile)
 
 	r := api.Init(*masterConn, *certFile, *keyFile)
 	r.StaticFile("/", "./www/index.html")
